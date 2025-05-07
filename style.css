@@ -1,3 +1,13 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+.container {
+    max-width: 412px;
+    margin: auto ;
+    background-color: antiquewhite;
+}
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -5,67 +15,156 @@
 }
 
 .gambar img {
-    width: 65px;
-    height: 65px;
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+    margin-right: -10px;
+    margin-top: 9px;
+    margin-bottom: 9px;
+
 }
 
 .isinavbar {
     width: 100%;
-    height: 55px;
-    background-color: rgb(27, 91, 88);
+    height: 53px;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    gap: 30px;
     
 }
 .isinavbar a {
     color: black;
     margin-top: 14px;
-    margin-right: 30px;
-    font-size: 25px;
-    text-decoration: none;
+    font-size: 22px;
     font-family: 'Times New Roman', Times, serif;
+    text-decoration: none;
 }
 
 .informasi {
     width: 100%;
     height: 350px;
-    background-color: aquamarine;
-    margin-top: -20px;
+    background-image: url(informasiimg.jpg);
+    margin-top: -21px;
     flex-direction: column;
     justify-content: center;
 }
 
 .informasi h1{
     color:antiquewhite;
-    font-size: 35px;
+    font-size: 30px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    padding-top: 100px;
+    padding-top: 70px;
 }
 
 .informasi p {
     color: aliceblue;
-    font-size: 20px;
+    font-size: 15px;
     text-align: center;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 56px;
+    padding-right: 56px;
 }
 
 .gproduk{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 56px;
+    padding-right: 56px;
+}
+.gproduk img {
+    width: 300px;
+    height: 250px;
+    margin-bottom: 20px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.testimoni{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.testimoni h1{
+    margin-bottom: 30px;
+}
+
+.tesasli {
+    display: flex;
+    flex-direction: column;
     margin-top: 50px;
-    margin-left: 85px;
-    margin-right: 85px;
+}
+
+.tes1 {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 60px;
+}
+.tes1 img{
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
+}
+
+.tes1 p {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+.footer {
     display: flex;
     flex-direction: row;
 }
-.gproduk img {
-    width: 330px;
-    height: 330px;
-    padding-right: 30px;
+
+.kanan {
+    display: flex;
+    flex-direction: column;
+    padding-left: 116px;
+    padding-right: 116px;
 }
 
-.gproduk2 img {
-    width: 330px;
-    height: 330px;
+.kanan img {
+    width: 180px;
+    height: 180px;
+}
+
+.kanan p {
+    text-align: center;
+}
+
+.kanan button {
+    width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    font-size: 14px;
+    margin: 30px 5px;
+    margin-top: 10px;
+    margin-left: 29px;
+    background-color: #0d92ff;
+    border: none;
+}
+
+.kanan button:hover {
+    color:aliceblue;
+    background-color: #2c2ea0;
+}
+
+.lokasi {
+    margin-top: 30px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.lokasi h1{
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 10px;
 }

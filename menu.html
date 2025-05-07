@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.gambar img {
+    width: 65px;
+    height: 65px;
+}
+
+.isinavbar {
+    width: 100%;
+    height: 55px;
+    background-color: w(68, 136, 133);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+.isinavbar a {
+    color: black;
+    margin-top: 14px;
+    margin-right: 30px;
+    font-size: 25px;
+    text-decoration: none;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.informasi {
+    width: 100%;
+    height: 350px;
+    background-color: aquamarine;
+    margin-top: -20px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.informasi h1{
+    color:antiquewhite;
+    font-size: 35px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 100px;
+}
+
+.informasi p {
+    color: aliceblue;
+    font-size: 20px;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.gproduk{
+    margin-top: 50px;
+    margin-left: 85px;
+    margin-right: 85px;
+    display: flex;
+    flex-direction: row;
+}
+.gproduk img {
+    width: 330px;
+    height: 330px;
+    padding-right: 30px;
+}
+
+.gproduk2 img {
+    width: 330px;
+    height: 330px;
+}
+
+.atas {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.toko p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.search {
+    padding: 8px 270px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    margin-right: -20px;
+}
+
+.search-btn {
+    padding: 8px 15px;
+    border: none;
+    background-color: #9632cf;
+    color: rgb(8, 8, 8);
+    border-radius: 6px;
+}
+
+.search-btn:hover {
+    background-color: #2c2ea0;
+    color: white;
+}
+.keranjang img{
+    margin-left: 10px;
+    width: 22px;
+}
+.h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+.mie {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.satu {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.satu img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.satu p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.dua {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.dua img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.dua p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah2 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah2 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah2 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.mie2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+}
+.tiga {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.tiga img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.tiga p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah3 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah3 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah3 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.empat {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.empat img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.empat p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah4 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah4 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah4 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.h2 {
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    margin-top: 20px;
+}
+.camilan1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.pertama {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.pertama img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.pertama p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah11 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah11 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah11 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah11 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.kedua {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.kedua img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.kedua p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah22 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah22 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah22 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah22 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.camilan2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+}
+.ketiga {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.ketiga img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.ketiga p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah33 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah33 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah33 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah33 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.keempat {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.keempat img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.keempat p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah44 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah44 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah44 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah44 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.camilan3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+.kelima {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.kelima img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.kelima p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah5 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah5 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah5 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah5 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.keenam {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.keenam img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.keenam p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah6 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah6 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah6 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah6 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.camilan4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.ketujuh {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.ketujuh img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.ketujuh p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawah7 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawah7 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawah7 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawah7 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.h3 {
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    margin-top: 20px;
+}
+.minuman1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.one {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.one img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.one p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh1 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh1 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh1 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.two {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.two img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.two p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh2 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh2 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh2 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.minuman2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+.three {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.three img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.three p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh3 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh3 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh3 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.four {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.four img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.four p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh4 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh4 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh4 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.minuman3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+.five {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.five img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.five p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh5 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh5 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh5 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh5 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.six {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.six img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.six p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh6 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh6 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh6 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh6 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+.minuman4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.seven {
+    border: 1px solid grey;
+    max-width: 370px;
+}
+.seven img {
+    width: 320px;
+    padding: 20px 20px;
+}
+.seven p {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+.bawahh7 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bawahh7 p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.bawahh7 button {
+    width: 100px;
+    height: 31px;
+    border-radius: 7px;
+    font-size: 16px;
+    margin: 30px 5px;
+    margin-top: 35px;
+    margin-right: 10px;
+    background-color: #9632cf;
+    border: none;
+}
+.bawahh7 button:hover{ 
+    color: white;
+    background-color: #2c2ea0;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="gambar"><img src="saung-removebg-preview.png" /></div>
+            <div class="isinavbar">
+                <a href="index.html">HOME</a>
+                <a href="menu.html">MENU</a>
+                <a href="pesanan.html">PESANAN</a>
+            </div>
+    </div>
+        <div class="atas">
+        <div class="toko">
+            <p>SAUNG BAHAGIA</p>
+        </div>
+        <input type="text" placeholder="Search..." class="search">
+        <button class="search-btn">Search</button>
+        <div class="keranjang">
+            <a href="kosong.html"><img src="keranjang-removebg-preview.png"></a>
+        </div>
+    </div>
+    <div class="h1">
+    <h1>MIE</h1>
+    </div>
+        <div class="mie">
+        <div class="satu">
+            <img src="contoh.jpg">
+            <p>Mie Kangen</p>
+            <div class="bawah">
+            <p>Rp 10.000,00</p>
+            <button>Tambah</button>
+            </div>
+        </div>
+        <div class="dua">
+            <img src="contoh.jpg">
+            <p>Mie Happy</p>
+            <div class="bawah2">
+            <p>Rp 10.000,00</p>
+            <button>Tambah</button>
+            </div>
+        </div>
+    </div>
+    <div class="mie2">
+        <div class="tiga">
+            <img src="contoh.jpg">
+            <p>Mie Angel</p>
+            <div class="bawah3">
+            <p>Rp 10.000,00</p>
+            <button>Tambah</button>
+            </div>
+        </div>
+        <div class="empat">
+            <img src="contoh.jpg">
+            <p>Mie Jebew</p>
+            <div class="bawah4">
+            <p>Rp 10.000,00</p>
+            <button>Tambah</button>
+            </div>
+        </div>
+    </div>
+    <div class="h2">
+        <h2>CAMILAN</h2>
+        </div>
+            <div class="camilan1">
+            <div class="pertama">
+                <img src="contoh.jpg">
+                <p>Dimsum Ayam</p>
+                <div class="bawah11">
+                <p>Rp 6.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+            <div class="kedua">
+                <img src="contoh.jpg">
+                <p>Udang Keju</p>
+                <div class="bawah22">
+                <p>Rp 6.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+        </div>
+        <div class="camilan2">
+            <div class="ketiga">
+                <img src="contoh.jpg">
+                <p>Udang Rambutan</p>
+                <div class="bawah33">
+                <p>Rp 6.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+            <div class="keempat">
+                <img src="contoh.jpg">
+                <p>Pangsit</p>
+                <div class="bawah44">
+                <p>Rp 6.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+        </div>
+        <div class="camilan3">
+            <div class="kelima">
+                <img src="contoh.jpg">
+                <p>Udang Sosis</p>
+                <div class="bawah5">
+                <p>Rp 5.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+            <div class="keenam">
+                <img src="contoh.jpg">
+                <p>Nuget</p>
+                <div class="bawah6">
+                <p>Rp 5.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+        </div>
+        <div class="camilan4">
+            <div class="ketujuh">
+                <img src="contoh.jpg">
+                <p>Cireng</p>
+                <div class="bawah7">
+                <p>Rp 5.000,00</p>
+                <button>Tambah</button>
+                </div>
+            </div>
+        </div>
+        <div class="h3">
+            <h3>MINUMAN</h3>
+            </div>
+                <div class="minuman1">
+                <div class="one">
+                    <img src="contoh.jpg">
+                    <p>Teh</p>
+                    <div class="bawahh1">
+                    <p>Rp 3.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+                <div class="two">
+                    <img src="contoh.jpg">
+                    <p>Es Nutrisari</p>
+                    <div class="bawahh2">
+                    <p>Rp 3.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+            </div>
+            <div class="minuman2">
+                <div class="three">
+                    <img src="contoh.jpg">
+                    <p>Es Taro</p>
+                    <div class="bawahh3">
+                    <p>Rp 6.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+                <div class="four">
+                    <img src="contoh.jpg">
+                    <p>Es Redvelvet</p>
+                    <div class="bawahh4">
+                    <p>Rp 6.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+            </div>
+            <div class="minuman3">
+                <div class="five">
+                    <img src="contoh.jpg">
+                    <p>Es Grentea matcha</p>
+                    <div class="bawahh5">
+                    <p>Rp 6.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+                <div class="six">
+                    <img src="contoh.jpg">
+                    <p>Es Coklat</p>
+                    <div class="bawahh6">
+                    <p>Rp 6.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+            </div>
+            <div class="minuman4">
+                <div class="seven">
+                    <img src="contoh.jpg">
+                    <p>Es Cappucino</p>
+                    <div class="bawahh7">
+                    <p>Rp 6.000,00</p>
+                    <button>Tambah</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

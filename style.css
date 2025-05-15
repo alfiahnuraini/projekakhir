@@ -150,6 +150,7 @@ body {
     margin-left: 29px;
     background-color: #0d92ff;
     border: none;
+    cursor: pointer;
 }
 
 .kanan button:hover {

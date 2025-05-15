@@ -16,22 +16,8 @@ laporanList.forEach((item, index) => {
     });
 });
 
-
-const cariLaporan = (dataBaru) => {
-    for (let i = 0; i < ListLaporan.length; i++){
-        if (ListLaporan[i].dataBaru == dataBaru) 
-            return i
-    }
-    return -1
-}
-
-const hapusLaporan = (target) => {
-    const laporanDiHapus = cariLaporan(target)
-    if (laporanDiHapus !== -ListLaporan.length) {
-    ListLaporan.splice(laporanDiHapus, ListLaporan.length)
-    tampilData()
-    }
-    localStorage.setItem('LaporanList',JSON.stringify(ListLaporan));
-
-    hapusLaporan()
-}
+const tombolHapus = document.getElementById("tombolHapus");
+tombolHapus.addEventListener("click", function () {
+    localStorage.removeItem('LaporanList');
+    location.reload();
+});

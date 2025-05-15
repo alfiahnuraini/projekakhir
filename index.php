@@ -88,6 +88,11 @@
                         <option value="Camilan">Camilan</option>
                       </select>
                     </div>
+
+                    <div class="mb-2">
+                      <label class="form-label">Gambar</label>
+                      <input type="file" class="form-control" id="txtgambar" accept="image/*">
+                    </div>
   
                       <div class="mt-3">
                         <button class="btn btn-primary " onclick="tambahProduk()">Selesai</button>
@@ -108,6 +113,7 @@
                     <th>Harga</th>
                     <th>Stok</th>
                     <th>Kategori</th>
+                    <th>Gambar</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -119,7 +125,7 @@
     </div>
   
   </div>
-  <script src="./script.js"></script>
+  <script src="./script-index.js"></script>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

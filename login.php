@@ -15,18 +15,18 @@ session_start();
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $username = $_POST['username'];
-  $password = md5($_POST['password']); // Hash MD5, harus sama seperti di DB
+  $email = $_POST['email'];
+  $password = $_POST['password']; 
 
-  $query = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
+  $query = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
   $result = $conn->query($query);
 
   if ($result->num_rows > 0) {
-    $_SESSION['admin'] = $username;
+    $_SESSION['admin'] = $email;
     header("Location: dashboard.php");
     exit;
   } else {
-    $error = "Username atau Password salah!";
+    $error = "email atau Password salah!";
   }
 }
 ?>
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="login-box">
   <h2>Login Admin</h2>
   <form action="" method="POST">
-    <input type="text" name="username" placeholder="Username" required />
+    <input type="text" name="email" placeholder="Email" required />
     <input type="password" name="password" placeholder="Password" required />
     <button type="submit">Login</button>
     <?php if ($error): ?>

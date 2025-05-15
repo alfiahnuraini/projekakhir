@@ -44,23 +44,39 @@
             border: none;
             border-radius: 5px;
             font-size: 16px;
+            cursor: pointer;
         }
         .levelclass {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-.level {
-  width: 48%;
-}
-.level label {
-  display: block;
-  margin: 5px 0;
-}
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .level {
+            width: 48%;
+        }
+        .level label {
+            display: block;
+            margin: 5px 0;
+        }
+        #keranjang-notif {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #f1c40f;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
+<!-- Notifikasi Keranjang -->
+<div id="keranjang-notif">
+    Keranjang: <span id="keranjang-jumlah">0</span> item
+</div>
+
+<!-- Menu Container -->
 <div class="menu-container">
     <img src="mie.jpg" alt="Mie Kangen">
     <h2>Mie Kangen</h2>
@@ -69,18 +85,18 @@
     <h3>Pilih Level</h3>
     <div class="levelclass">
         <div class="level">
-          <label><input type="checkbox"> Lv. 1</label>
-          <label><input type="checkbox"> Lv. 2</label>
-          <label><input type="checkbox"> Lv. 3</label>
-          <label><input type="checkbox"> Lv. 4</label>
+            <label><input type="checkbox"> Lv. 1</label>
+            <label><input type="checkbox"> Lv. 2</label>
+            <label><input type="checkbox"> Lv. 3</label>
+            <label><input type="checkbox"> Lv. 4</label>
         </div>
         <div class="level">
-          <label><input type="checkbox"> Lv. 5</label>
-          <label><input type="checkbox"> Lv. 6</label>
-          <label><input type="checkbox"> Lv. 7</label>
-          <label><input type="checkbox"> Lv. 8</label>
+            <label><input type="checkbox"> Lv. 5</label>
+            <label><input type="checkbox"> Lv. 6</label>
+            <label><input type="checkbox"> Lv. 7</label>
+            <label><input type="checkbox"> Lv. 8</label>
         </div>
-      </div>
+    </div>
 
     <h3>Catatan (opsional)</h3>
     <textarea rows="3" style="width: 100%;"></textarea>
@@ -98,18 +114,19 @@
 
 <script>
     let hargaSatuan = 10000;
-    //jmldefault
-    let jumlah = 1; 
+    let jumlah = 1;
 
+    // Fungsi untuk memperbarui harga tombol
     function updateHarga() {
         let total = hargaSatuan * jumlah;
         document.getElementById("btn-pesan").innerText = `Tambah Pesanan - Rp ${total.toLocaleString('id-ID')}`;
     }
 
     function tambah() {
-        jumlah++;
-        document.getElementById("jumlah").value = jumlah;
-        updateHarga();
+    jumlah++;
+    if (jumlah > 99) jumlah = 99;  // Menambahkan pembatasan jumlah maksimum
+    document.getElementById("jumlah").value = jumlah;
+    updateHarga();
     }
 
     function kurang() {
@@ -119,22 +136,54 @@
             updateHarga();
         }
     }
+
     function tambahPesanan() {
-        // Ambil level yang dipilih (ambil satu atau semua centang)
-        const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
-        const selectedLevels = Array.from(levelCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.parentElement.textContent.trim())
-            .join(',');
+    const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
+    const selectedLevels = Array.from(levelCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.parentElement.textContent.trim())
+        .join(',');
 
-        // Ambil catatan
-        const catatan = document.querySelector('textarea').value;
+    const catatan = document.querySelector('textarea').value;
 
-        // Redirect dengan query string
-        const url = `menu.html?jumlah=${jumlah}&level=${encodeURIComponent(selectedLevels)}&catatan=${encodeURIComponent(catatan)}`;
-        window.location.href = url;
-    }
+    const data = {
+        nama: 'Mie Kangen', // Sesuaikan dengan nama menu
+        jumlah: jumlah,
+        level: selectedLevels,
+        catatan: catatan
+    };
+
+    fetch('tambah_keranjang.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            // Update jumlah keranjang setelah sukses menambah pesanan
+            fetch('get_jumlah_keranjang.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("keranjang-jumlah").innerText = data.jumlah;
+                window.location.href = "menu.html"; // Pindah ke halaman menu setelah berhasil
+        });
+        } else {
+            alert('Gagal menambahkan ke keranjang');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan.');
+    });
+}
+
+
+    // Jalankan saat pertama kali
+    updateHarga();
+
 </script>
+
 
 </body>
 </html>

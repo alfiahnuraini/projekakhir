@@ -44,12 +44,14 @@
             border: none;
             border-radius: 5px;
             font-size: 16px;
+            cursor: pointer;
         }
         .levelclass {
             display: flex;
             justify-content: space-between;
             gap: 10px;
         }
+<<<<<<< HEAD
 .level {
   width: 48%;
 }
@@ -57,30 +59,54 @@
   display: block;
   margin: 5px 0;
 }
+=======
+        .level {
+            width: 48%;
+        }
+        .level label {
+            display: block;
+            margin: 5px 0;
+        }
+        #keranjang-notif {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #f1c40f;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+>>>>>>> da2654c1cb5c769a597e6945b44dc572b7cd16d1
     </style>
 </head>
 <body>
 
+<!-- Notifikasi Keranjang -->
+<div id="keranjang-notif">
+    Keranjang: <span id="keranjang-jumlah">0</span> item
+</div>
+
+<!-- Menu Container -->
 <div class="menu-container">
-    <img src="mie.jpg" alt="Mie Kangen">
-    <h2>Mie Happy</h2>
-    <p id="harga-satuan">Rp 10.000</p>
+    <img src="miehappy.jpg" alt="Mie Happy"> <!-- Ganti dengan gambar Mie Happy -->
+    <h2>Mie Happy</h2> <!-- Ganti dengan nama menu -->
+    <p id="harga-satuan">Rp 15.000</p> <!-- Ganti dengan harga menu -->
 
     <h3>Pilih Level</h3>
     <div class="levelclass">
         <div class="level">
-          <label><input type="checkbox"> Lv. 1</label>
-          <label><input type="checkbox"> Lv. 2</label>
-          <label><input type="checkbox"> Lv. 3</label>
-          <label><input type="checkbox"> Lv. 4</label>
+            <label><input type="checkbox"> Lv. 1</label>
+            <label><input type="checkbox"> Lv. 2</label>
+            <label><input type="checkbox"> Lv. 3</label>
+            <label><input type="checkbox"> Lv. 4</label>
         </div>
         <div class="level">
-          <label><input type="checkbox"> Lv. 5</label>
-          <label><input type="checkbox"> Lv. 6</label>
-          <label><input type="checkbox"> Lv. 7</label>
-          <label><input type="checkbox"> Lv. 8</label>
+            <label><input type="checkbox"> Lv. 5</label>
+            <label><input type="checkbox"> Lv. 6</label>
+            <label><input type="checkbox"> Lv. 7</label>
+            <label><input type="checkbox"> Lv. 8</label>
         </div>
-      </div>
+    </div>
 
     <h3>Catatan (opsional)</h3>
     <textarea rows="3" style="width: 100%;"></textarea>
@@ -92,14 +118,13 @@
         <button onclick="tambah()">+</button>
     </div>
 
-    <button class="btn-pesan" id="btn-pesan" onclick="tambahPesanan()">Tambah Pesanan - Rp 10.000</button>
+    <button class="btn-pesan" id="btn-pesan" onclick="tambahPesanan()">Tambah Pesanan - Rp 15.000</button> <!-- Sesuaikan harga di sini -->
 
 </div>
 
 <script>
-    let hargaSatuan = 10000;
-    //jmldefault
-    let jumlah = 1; 
+    let hargaSatuan = 15000;  // Ganti dengan harga Mie Happy
+    let jumlah = 1;
 
     function updateHarga() {
         let total = hargaSatuan * jumlah;
@@ -108,6 +133,7 @@
 
     function tambah() {
         jumlah++;
+        if (jumlah > 99) jumlah = 99;
         document.getElementById("jumlah").value = jumlah;
         updateHarga();
     }
@@ -119,21 +145,54 @@
             updateHarga();
         }
     }
+
     function tambahPesanan() {
-        // Ambil level yang dipilih (ambil satu atau semua centang)
         const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
         const selectedLevels = Array.from(levelCheckboxes)
             .filter(cb => cb.checked)
             .map(cb => cb.parentElement.textContent.trim())
             .join(',');
 
-        // Ambil catatan
         const catatan = document.querySelector('textarea').value;
 
-        // Redirect dengan query string
-        const url = `menu.html?jumlah=${jumlah}&level=${encodeURIComponent(selectedLevels)}&catatan=${encodeURIComponent(catatan)}`;
-        window.location.href = url;
+        const data = {
+            nama: 'Mie Happy',  // Ganti dengan nama Mie Happy
+            jumlah: jumlah,
+            level: selectedLevels,
+            catatan: catatan,
+            harga: hargaSatuan
+        };
+
+        const btn = document.getElementById('btn-pesan');
+        btn.disabled = true;
+        btn.innerText = 'Menambahkan...';
+
+        fetch('tambah_keranjang.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                let jumlahKeranjang = parseInt(document.getElementById("keranjang-jumlah").innerText);
+                document.getElementById("keranjang-jumlah").innerText = jumlahKeranjang + jumlah;
+                window.location.href = "menu.html";
+            } else {
+                alert('Gagal menambahkan ke keranjang');
+                btn.disabled = false;
+                updateHarga();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan.');
+            btn.disabled = false;
+            updateHarga();
+        });
     }
+
+    updateHarga();
 </script>
 
 </body>

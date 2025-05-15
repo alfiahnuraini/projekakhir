@@ -38,6 +38,22 @@
     height: 65px;
     margin-left: -550px; 
 }
+
+.hapus button {
+    background-color: #ff0d5e;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 1000px;
+    margin-bottom: 20px;
+    margin-top: -20px;
+}
+
+.hapus button:hover{
+    background-color: #ff0d5e;
+}
 </style>
 <body>
     <div class="container">
@@ -70,10 +86,13 @@
             <tbody id="dataBaru"></tbody>
               </table>
           </div>
+           <div class="hapus">
+        <button id="tombolHapus" class="btn-btn-danger" on click="hapusLaporan()">Hapus</button>
+        </div>
         </div>
         </div>
 </div>
-<script src="./script3.js"></script>
+<script src="./script-laporan.js"></script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

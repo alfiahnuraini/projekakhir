@@ -44,6 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         localStorage.setItem("LaporanList", JSON.stringify(laporanList));
+
+        let semuaPesanan = JSON.parse(localStorage.getItem("pesananList")) || [];
+        const sisaPesanan = semuaPesanan.filter(item => item.noMeja !== noMeja);
+        localStorage.setItem("pesananList", JSON.stringify(sisaPesanan));
+        
         pesanan.remove();
           });
     });

@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Hapus pesanan yang sudah dibayar di awal
+  const semuaPesanan = document.querySelectorAll(".pesanan1");
+
+  semuaPesanan.forEach(function (pesanan) {
+    const noMeja = pesanan.querySelector(".meja h2")?.textContent.trim();
+    const sudahBayar = localStorage.getItem(`sudahBayar_${noMeja}`);
+    if (sudahBayar === "true") {
+      pesanan.remove();     // Hapus pesanan yang sudah dibayar
+    }
+  });
+
     const pesananList = document.querySelectorAll(".pesanan1");
   
     pesananList.forEach(function (pesanan) {
@@ -44,11 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         localStorage.setItem("LaporanList", JSON.stringify(laporanList));
-
-        let semuaPesanan = JSON.parse(localStorage.getItem("pesananList")) || [];
-        const sisaPesanan = semuaPesanan.filter(item => item.noMeja !== noMeja);
-        localStorage.setItem("pesananList", JSON.stringify(sisaPesanan));
-        
+        localStorage.setItem(`sudahBayar_${noMeja}`, "true");
+        localStorage.setItem(`pesanan_${noMeja}`);
         pesanan.remove();
           });
     });

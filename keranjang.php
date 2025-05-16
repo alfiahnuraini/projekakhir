@@ -1,24 +1,29 @@
 <?php
-session_start();  // Memulai sesi
-
-// Jika keranjang ada di sesi
-if (isset($_SESSION['keranjang']) && count($_SESSION['keranjang']) > 0) {
-    echo "<h2>Keranjang Anda</h2>";
-    echo "<ul>";
-
-    foreach ($_SESSION['keranjang'] as $item) {
-        echo "<li>";
-        echo "Nama: " . $item['nama'] . "<br>";
-        echo "Jumlah: " . $item['jumlah'] . "<br>";
-        echo "Level: " . $item['level'] . "<br>";
-        echo "Catatan: " . $item['catatan'] . "<br>";
-        echo "Harga: Rp " . number_format($item['harga'], 0, ',', '.') . "<br>";
-        echo "</li>";
-    }
-
-    echo "</ul>";
-    echo "<p>Total: Rp " . number_format(array_sum(array_column($_SESSION['keranjang'], 'harga')), 0, ',', '.') . "</p>";
-} else {
-    echo "<p>Keranjang Anda kosong.</p>";
+$koneksi = new mysqli("localhost", "root", "", "saung_bahagia");
+if ($koneksi->connect_error) {
+  die("Koneksi gagal: " . $koneksi->connect_error);
 }
+
+$result = $koneksi->query("SELECT * FROM keranjang");
+
+echo "<h2>Keranjang Anda</h2>";
+
+if ($result->num_rows > 0) {
+  echo "<ul>";
+  while ($row = $result->fetch_assoc()) {
+    echo "<li>";
+    echo "<strong>" . $row['nama'] . "</strong><br>";
+    echo "Jumlah: " . $row['jumlah'] . "<br>";
+    echo "Level: " . $row['level'] . "<br>";
+    echo "Catatan: " . $row['catatan'] . "<br>";
+    echo "Total Harga: Rp " . number_format($row['total'], 0, ',', '.') . "<br>";
+    echo "<img src='" . $row['gambar'] . "' width='100'><br>";
+    echo "</li><hr>";
+  }
+  echo "</ul>";
+} else {
+  echo "<p>Keranjang kosong.</p>";
+}
+
+$koneksi->close();
 ?>

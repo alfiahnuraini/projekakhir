@@ -1,38 +1,13 @@
 <?php
-header('Content-Type: application/json');
+include 'koneksi.php'; // koneksi ke DB
 
-// Ambil data JSON
-$data = json_decode(file_get_contents('php://input'), true);
+$id_menu = $_POST['id_menu'];
+$jumlah = $_POST['jumlah'];
+$level = $_POST['level'];
+$catatan = $_POST['catatan'];
 
-// Validasi input
-if (!$data || !isset($data['nama']) || !isset($data['jumlah'])) {
-    echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
-    exit;
-}
+$stmt = $conn->prepare("INSERT INTO keranjang (id_menu, jumlah, level, catatan) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("iiss", $id_menu, $jumlah, $level, $catatan);
+$stmt->execute();
 
-// Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "namadatabase"); // GANTI namadatabase!
-
-if ($koneksi->connect_error) {
-    echo json_encode(['success' => false, 'message' => 'Koneksi gagal']);
-    exit;
-}
-
-// Ambil data
-$nama = $koneksi->real_escape_string($data['nama']);
-$jumlah = intval($data['jumlah']);
-$level = $koneksi->real_escape_string($data['level']);
-$catatan = $koneksi->real_escape_string($data['catatan']);
-$harga = intval($data['harga']);
-
-$sql = "INSERT INTO keranjang (nama, jumlah, level, catatan, harga)
-        VALUES ('$nama', $jumlah, '$level', '$catatan', $harga)";
-
-if ($koneksi->query($sql)) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['success' => false, 'message' => $koneksi->error]);
-}
-
-$koneksi->close();
-?>
+echo "Sukses";

@@ -67,7 +67,7 @@
                 <form id="formProduk" action="stok.php" method="POST" enctype="multipart/form-data">
                   <div class="mb-2">
                       <label class="form-label">Nama Produk</label>
-                      <input type="text" class="form-control" id="txtnamaProduk" name="namaProduk"/>
+                      <input type="text" class="form-control" id="txtnama" name="nama"/>
                   </div>
       
                     <div class="mb-2">
@@ -124,13 +124,13 @@
 <?php
 include 'koneksi.php';
 $no = 1;
-$sql = "SELECT * FROM menu";
+$sql = "SELECT * FROM produk";
 $result = $koneksi->query($sql);
 
 while ($row = $result->fetch_assoc()) {
     echo "<tr>
             <td>$no</td>
-            <td>{$row['nama_produk']}</td>
+            <td>{$row['nama']}</td>
             <td>{$row['harga']}</td>
             <td>{$row['stok']}</td>
             <td>{$row['kategori']}</td>

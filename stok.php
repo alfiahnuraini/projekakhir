@@ -2,7 +2,7 @@
 include 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $namaProduk = $_POST['namaProduk'];
+    $nama = $_POST['nama'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
     $kategori = $_POST['kategori'];
@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Simpan gambar ke folder
     if (move_uploaded_file($tmp, $folder.$namaFile)) {
-        $sql = "INSERT INTO menu (nama_produk, harga, stok, kategori, gambar)
-                VALUES ('$namaProduk', '$harga', '$stok', '$kategori', '$namaFile')";
+        $sql = "INSERT INTO produk (nama, harga, stok, kategori, gambar)
+                VALUES ('$nama', '$harga', '$stok', '$kategori', '$namaFile')";
         
         if ($koneksi->query($sql) === TRUE) {
             header("Location: index.php");

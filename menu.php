@@ -1,5 +1,5 @@
 <?php
-$koneksi = new mysqli("localhost", "root", "", "menu");
+$koneksi = new mysqli("localhost", "root", "", "saung_bahagia");
 
 $query = "SELECT * FROM menu";
 $result = $koneksi->query($query);

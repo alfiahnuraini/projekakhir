@@ -84,7 +84,7 @@
                       <label class="form-label">Kategori</label>
                       <select class="form-select" aria-label="Default select example" name="kategori" id="txtkategori">
                         <option selected></option>
-                        <option value="Makanan">Makanan</option>
+                        <option value="Mie">Mie</option>
                         <option value="Minuman">Minuman</option>
                         <option value="Camilan">Camilan</option>
                       </select>

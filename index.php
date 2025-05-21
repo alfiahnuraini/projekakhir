@@ -128,14 +128,14 @@ $sql = "SELECT * FROM produk";
 $result = $koneksi->query($sql);
 
 while ($row = $result->fetch_assoc()) {
-    echo "<tr>
-            <td>$no</td>
+    echo "<tr id='produk-{$row['id']}'>
+            <td>{$no}</td>
             <td>{$row['nama']}</td>
             <td>{$row['harga']}</td>
             <td>{$row['stok']}</td>
             <td>{$row['kategori']}</td>
             <td><img src='gambar/{$row['gambar']}' width='50'></td>
-            <td><a href='stok.php?id={$row['id']}' class='btn btn-danger btn-sm'>Hapus</a></td>
+            <td><button class='btn btn-danger btn-sm' onclick='hapusData({$row["id"]})'>Hapus</button></td>
         </tr>";
     $no++;
 }
@@ -150,6 +150,26 @@ while ($row = $result->fetch_assoc()) {
   
   </div>
 </body>
+<script>
+  function hapusData(id) {
+  fetch("hapus.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: "id=" + id
+  })
+  .then(res => res.text())
+  .then(res => {
+    if (res.trim() === "Sukses") {
+      document.getElementById("produk-" + id).remove();
+    } else {
+      alert("Gagal menghapus data: " + res);
+    }
+  })
+  .catch(err => alert("Error: " + err));
+}
+  </script>
 </html>
 
 

@@ -1,11 +1,15 @@
 <?php
 include 'koneksi.php';
 
-// Hapus jika ada parameter ?hapus=ID
-if (isset($_GET['hapus'])) {
-    $id = $_GET['hapus'];
-    mysqli_query($conn, "DELETE FROM produk WHERE id = $id");
-    header("Location: stok.php");
-    exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = intval($_POST['id']);
+    $sql = "DELETE FROM produk WHERE id = $id";
+
+    if ($koneksi->query($sql) === TRUE) {
+        echo "Sukses";
+    } else {
+        echo "Gagal";
+    }
+} else {
+    echo "Invalid request";
 }
-?>

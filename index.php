@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +49,13 @@
     margin-left: -550px;
     
 }
+
+.logout{
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  padding-top: 13px;
+}
 </style>
 <body>
   <div class="container1">
@@ -49,9 +64,12 @@
     <div class="nav">
       <div class="gambar"><img src="saung.png" /></div>
       <div class="isinav">
-      <a href="index.html" style="font-size: 30px;">Stok</a>
-      <a href="bayar.html" style="font-size: 30px;">Bayar</a>
-      <a href="laporan.html" style="font-size: 30px;">Laporan</a>
+      <a href="index.php" style="font-size: 30px;">Stok</a>
+      <a href="bayar.php" style="font-size: 30px;">Bayar</a>
+      <a href="laporan.php" style="font-size: 30px;">Laporan</a>
+      </div>
+      <div class="logout">
+        <a href="logout.php">Log Out</a> 
       </div>
     </div>
 
@@ -97,7 +115,7 @@
   
                       <div class="mt-3">
                         <button type="submit" class="btn btn-primary ">Selesai</button>
-                        <button class="btn btn-secondary" onclick="cancel()">Cancel</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
                       </div>
                 </form>
               </div>
@@ -149,6 +167,11 @@ while ($row = $result->fetch_assoc()) {
     </div>
   
   </div>
+  <script>
+    function resetForm() {
+      document.getElementById("formProduk").reset();
+    }
+  </script> 
 </body>
 <script>
   function hapusData(id) {

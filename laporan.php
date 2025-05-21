@@ -62,9 +62,9 @@
       <div class="nav">
         <div class="gambar"><img src="saung.png" /></div>
         <div class="isinav">
-        <a href="index.html" style="font-size: 30px;">Stok</a>
-        <a href="bayar.html" style="font-size: 30px;">Bayar</a>
-        <a href="laporan.html" style="font-size: 30px;">Laporan</a>
+        <a href="index.php" style="font-size: 30px;">Stok</a>
+        <a href="bayar.php" style="font-size: 30px;">Bayar</a>
+        <a href="laporan.php" style="font-size: 30px;">Laporan</a>
         </div>
       </div>
 

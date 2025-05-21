@@ -122,9 +122,9 @@
       <div class="nav">
         <div class="gambar"><img src="saung.png" /></div>
         <div class="isinav">
-        <a href="index.html">Stok</a>
-        <a href="bayar.html">Bayar</a>
-        <a href="laporan.html">Laporan</a>
+        <a href="index.php">Stok</a>
+        <a href="bayar.php">Bayar</a>
+        <a href="laporan.php">Laporan</a>
         </div>
       </div>
         <center><h1>DAFTAR PESANAN</h1></center>

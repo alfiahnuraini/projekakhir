@@ -6,7 +6,6 @@ body {
     background-color: antiquewhite;
     max-width: 400px;
     margin: auto;
-    padding: 0 16px;
 }
 
 .navbar {
@@ -36,7 +35,7 @@ body {
 .isinavbar a {
     color: black;
     margin-right: 8px;
-    font-size: 24px;
+    font-size: 22px;
     text-decoration: none;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -78,6 +77,8 @@ body {
     margin-right: 5px;  
     margin-left: -25px;
 }
+
+
 
 .search-btn:hover {
     background-color: #2c2ea0;

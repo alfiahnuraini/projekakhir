@@ -6,12 +6,8 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-
-// Gunakan prepared statement
-$stmt = $koneksi->prepare("SELECT * FROM produk WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
+$query = "SELECT * FROM produk WHERE id = '$id'";
+$result = $koneksi->query($query);
 
 if ($result->num_rows == 0) {
   die("Produk tidak ditemukan.");
@@ -24,7 +20,8 @@ $produk = $result->fetch_assoc();
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Detail Produk - <?= htmlspecialchars($produk['nama']) ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($produk['nama']) ?></title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -33,7 +30,7 @@ $produk = $result->fetch_assoc();
     .menu-container {
       max-width: 400px;
       margin: auto;
-      border: 1px solid #000;
+      border: 1px solid #000000;
       border-radius: 10px;
       padding: 20px;
     }
@@ -78,7 +75,6 @@ $produk = $result->fetch_assoc();
       display: block;
       margin: 5px 0;
     }
-    
   </style>
 </head>
 <body>
@@ -92,12 +88,12 @@ $produk = $result->fetch_assoc();
   <div class="levelclass">
     <div class="level">
       <?php for ($i = 1; $i <= 4; $i++): ?>
-        <label><input type="radio" name="level" value="<?= $i ?>"> Lv. <?= $i ?></label>
+        <label><input type="checkbox" value="<?= $i ?>"> Lv. <?= $i ?></label>
       <?php endfor; ?>
     </div>
     <div class="level">
       <?php for ($i = 5; $i <= 8; $i++): ?>
-        <label><input type="radio" name="level" value="<?= $i ?>"> Lv. <?= $i ?></label>
+        <label><input type="checkbox" value="<?= $i ?>"> Lv. <?= $i ?></label>
       <?php endfor; ?>
     </div>
   </div>
@@ -139,47 +135,52 @@ $produk = $result->fetch_assoc();
   }
 
   function tambahPesanan() {
-  const namaMie = document.getElementById("nama-mie").innerText;
-  const gambarMie = document.getElementById("gambar-mie").src.split('/').pop();
-  const selectedLevel = document.querySelector('input[name="level"]:checked');
-  const harga = hargaSatuan;
-  const jumlahPesanan = jumlah;
-  const catatan = document.getElementById("catatan").value;
-  const totalHarga = harga * jumlahPesanan;
+    const namaMie = document.getElementById("nama-mie").innerText;
+    const gambarMie = document.getElementById("gambar-mie").src;
+    const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
+    const selectedLevels = Array.from(levelCheckboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
 
-  if (!selectedLevel) {
-    alert("Pilih level terlebih dahulu.");
-    return;
+    if (selectedLevels.length === 0) {
+      alert("Pilih minimal 1 level pedas!");
+      return;
+    }
+
+    const catatan = document.getElementById("catatan").value;
+    const totalHarga = hargaSatuan * jumlah;
+
+    const pesanan = {
+      nama: namaMie,
+      gambar: gambarMie,
+      level: selectedLevels,
+      catatan: catatan,
+      jumlah: jumlah,
+      hargaSatuan: hargaSatuan,
+      totalHarga: totalHarga
+    };
+
+    console.log("Mengirim data:", pesanan);
+
+    fetch("tambah_keranjang.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pesanan)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("Pesanan berhasil ditambahkan!");
+        window.location.href = "keranjang.php";
+      } else {
+        alert("Gagal menambahkan pesanan: " + data.message);
+      }
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+      alert("Terjadi kesalahan saat mengirim pesanan.");
+    });
   }
-
-  const pesanan = {
-    nama: namaMie,
-    gambar: gambarMie,
-    level: selectedLevel.value,
-    catatan: catatan,
-    jumlah: jumlahPesanan,
-    hargaSatuan: harga,
-    totalHarga: totalHarga
-  };
-
-  fetch("tambah_keranjang.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(pesanan)
-  })
-  .then(res => res.json())
-  .then(response => {
-  if (response.success) {
-    // Redirect sambil kirim ?pesan=berhasil
-    window.location.href = "menu.php?pesan=berhasil";
-  } else {
-    alert("Gagal: " + response.message);
-  }
-});
-}
-
 </script>
 </body>
 </html>

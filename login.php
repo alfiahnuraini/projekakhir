@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if ($result->num_rows > 0) {
     $_SESSION['admin'] = $email;
-    header("Location: dashboard.php");
+    header("Location: index.php");
     exit;
   } else {
     $error = "email atau Password salah!";

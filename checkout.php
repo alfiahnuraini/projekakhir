@@ -10,6 +10,6 @@ $koneksi->query("DELETE FROM keranjang");
 $koneksi->close();
 
 // Redirect kembali ke menu
-header("Location: menu.html");
+header("Location: menu.php");
 exit();
 ?>

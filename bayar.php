@@ -115,6 +115,13 @@
     background-color: #0071cc;
 }
 
+.takeaway {
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  padding-top: 13px;
+}
+
 </style>
 <body>
     <div class="container1">
@@ -126,6 +133,9 @@
         <a href="bayar.php">Bayar</a>
         <a href="laporan.php">Laporan</a>
         </div>
+        <div class="takeaway">
+        <a href="form.html">Take Away</a> 
+      </div>
       </div>
         <center><h1>DAFTAR PESANAN</h1></center>
 

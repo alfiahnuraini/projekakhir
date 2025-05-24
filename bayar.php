@@ -115,6 +115,13 @@
     background-color: #0071cc;
 }
 
+.takeaway {
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  padding-top: 13px;
+}
+
 </style>
 <body>
     <div class="container1">
@@ -122,10 +129,13 @@
       <div class="nav">
         <div class="gambar"><img src="saung.png" /></div>
         <div class="isinav">
-        <a href="index.html">Stok</a>
-        <a href="bayar.html">Bayar</a>
-        <a href="laporan.html">Laporan</a>
+        <a href="index.php">Stok</a>
+        <a href="bayar.php">Bayar</a>
+        <a href="laporan.php">Laporan</a>
         </div>
+        <div class="takeaway">
+        <a href="form.html">Take Away</a> 
+      </div>
       </div>
         <center><h1>DAFTAR PESANAN</h1></center>
 

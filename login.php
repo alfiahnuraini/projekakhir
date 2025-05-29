@@ -6,7 +6,7 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
-
+    
     // Hardcoded login
     if ($email == "saungbahagia@gmail.com" && $password == "selalubahagia") {
         $_SESSION["admin"] = $email;

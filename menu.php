@@ -77,19 +77,30 @@ if ($resultJumlah && $rowJumlah = $resultJumlah->fetch_assoc()) {
                             <p>Rp <?= number_format($produk['harga'], 0, ',', '.') ?></p>
 
                             <?php if ($kategori === 'mie'): ?>
-                                <a href="detail_menu.php?id=<?= $produk['id'] ?>">
-                                    <button>Tambah</button>
-                                </a>
+                                <!-- Jika produk "mie angel", langsung tambahkan ke keranjang tanpa masuk ke detail -->
+                                <?php if (strtolower($produk['nama']) === 'mie angel'): ?>
+                                    <button class="btn-tambah" 
+                                            data-nama="<?= htmlspecialchars($produk['nama']) ?>" 
+                                            data-harga="<?= $produk['harga'] ?>" 
+                                            data-gambar="<?= htmlspecialchars($produk['gambar']) ?>"
+                                            data-kategori="<?= $kategori ?>"
+                                            data-id="<?= $produk['id'] ?>">Tambah</button>
                                 <?php else: ?>
-                                    <button 
-                                        class="btn-tambah" 
-                                        data-nama="<?= htmlspecialchars($produk['nama']) ?>" 
-                                        data-harga="<?= $produk['harga'] ?>" 
-                                        data-gambar="<?= htmlspecialchars($produk['gambar']) ?>" 
-                                        data-kategori="<?= $kategori ?>">
-                                        Tambah
-                                    </button>
+                                    <a href="detail_menu.php?id=<?= $produk['id'] ?>">
+                                        <button>Tambah</button>
+                                    </a>
                                 <?php endif; ?>
+                            <?php else: ?>
+                                <button 
+                                    class="btn-tambah" 
+                                    data-nama="<?= htmlspecialchars($produk['nama']) ?>" 
+                                    data-harga="<?= $produk['harga'] ?>" 
+                                    data-gambar="<?= htmlspecialchars($produk['gambar']) ?>" 
+                                    data-kategori="<?= $kategori ?>"
+                                    data-id="<?= $produk['id'] ?>">
+                                    Tambah
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -99,6 +110,7 @@ if ($resultJumlah && $rowJumlah = $resultJumlah->fetch_assoc()) {
 </div>
 
 <script>
+// Fungsi pencarian produk
 function searchProduct() {
     const keyword = document.getElementById("searchInput").value.toLowerCase();
     const kategoriList = ["mie", "camilan", "minuman"];
@@ -135,42 +147,51 @@ function searchProduct() {
 
     return false;
 }
-</script>
-<script>
+
+// Event listener untuk tombol 'Tambah'
 document.querySelectorAll('.btn-tambah').forEach(button => {
     button.addEventListener('click', () => {
-        const data = {
-            nama: button.dataset.nama,
-            hargaSatuan: parseInt(button.dataset.harga),
-            totalHarga: parseInt(button.dataset.harga),
-            gambar: button.dataset.gambar,
-            jumlah: 1,
-            level: '-',
-            catatan: ''
-        };
+        const namaProduk = button.dataset.nama;
+        
+        // Cek jika produk adalah 'mie angel'
+        if (namaProduk.toLowerCase() === 'mie angel') {
+            const data = {
+                nama: namaProduk,
+                hargaSatuan: parseInt(button.dataset.harga),
+                totalHarga: parseInt(button.dataset.harga),
+                gambar: button.dataset.gambar,
+                jumlah: 1,
+                level: '-',
+                catatan: ''
+            };
 
-        fetch('tambah_keranjang.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.success) {
-                alert(response.message);
-                document.getElementById('cart-count').textContent = response.jumlah;
-            } else {
-                alert(response.message);
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Terjadi kesalahan.");
-        });
+            // Kirim data ke server dan tambahkan ke keranjang
+            fetch('tambah_keranjang.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    alert(response.message);
+                    document.getElementById('cart-count').textContent = response.jumlah;
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Terjadi kesalahan.");
+            });
+        } else {
+            // Jika bukan 'mie angel', arahkan ke halaman detail_menu.php
+            const produkId = button.dataset.id;  // Ambil ID produk
+            window.location.href = `detail_menu.php?id=${produkId}`;
+        }
     });
 });
 </script>
-
 
 </body>
 </html>

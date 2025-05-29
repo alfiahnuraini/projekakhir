@@ -1,6 +1,6 @@
 <?php
 // Koneksi ke database menu di Laptop 1
-$conn1 = new mysqli("192.168.1.14", "syncuser", "sync123", "saung_bahagia");
+$conn1 = new mysqli("192.168.1.12", "syncuser", "sync123", "saung_bahagia");
 if ($conn1->connect_error) {
     die("Koneksi ke Laptop 1 gagal: " . $conn1->connect_error);
 }

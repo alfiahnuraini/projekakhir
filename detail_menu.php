@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include 'koneksi.php';
 
 if (!isset($_GET['id'])) {
   die("ID produk tidak ditemukan.");
@@ -78,7 +78,6 @@ $produk = $result->fetch_assoc();
       display: block;
       margin: 5px 0;
     }
-    
   </style>
 </head>
 <body>
@@ -171,14 +170,15 @@ $produk = $result->fetch_assoc();
   })
   .then(res => res.json())
   .then(response => {
-  if (response.success) {
-    // Redirect sambil kirim ?pesan=berhasil
-    window.location.href = "menu.php?pesan=berhasil";
-  } else {
-    alert("Gagal: " + response.message);
-  }
-});
+    if (response.success) {
+      alert("Berhasil ditambahkan ke keranjang.");
+      window.location.href = "menu.php";  // <- pindah ke halaman menu
+    } else {
+      alert("Gagal: " + response.message);
+    }
+  });
 }
+
 
 </script>
 </body>

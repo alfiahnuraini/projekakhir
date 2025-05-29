@@ -1,64 +1,58 @@
 <?php
-session_start();
-header("Content-Type: application/json");
-include 'config.php';
+include 'koneksi.php';
 
-$data = [];
+// Ambil data dari JSON yang dikirim oleh fetch
+$data = json_decode(file_get_contents("php://input"), true);
 
-// Ambil inputan dari JSON atau POST biasa
-$rawInput = file_get_contents("php://input");
-$decoded = json_decode($rawInput, true);
-
-if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-    $data = $decoded;
-} elseif ($_POST) {
-    $data = $_POST;
-} else {
-    echo json_encode([
-        "success" => false,
-        "message" => "Format data tidak dikenali (harus JSON atau POST)."
-    ]);
+// Pastikan data lengkap
+if (!isset($data['nama'], $data['hargaSatuan'], $data['jumlah'], $data['level'], $data['catatan'], $data['totalHarga'], $data['gambar'])) {
+    echo json_encode(["success" => false, "message" => "Data tidak lengkap"]);
     exit;
 }
 
-// Ambil data dari input
-$nama       = $data['nama'] ?? '';
-$gambar     = $data['gambar'] ?? '';
-$catatan    = $data['catatan'] ?? '';
-$jumlah     = (int)($data['jumlah'] ?? 1);
-$harga      = (int)($data['hargaSatuan'] ?? ($data['harga'] ?? 0));
-$total      = (int)($data['totalHarga'] ?? ($data['total'] ?? 0));
-$user_id    = $_SESSION['user_id'] ?? 1;
+$nama = $data['nama'];
+$hargaSatuan = $data['hargaSatuan'];
+$jumlah = $data['jumlah'];
+$level = $data['level'];
+$catatan = $data['catatan'];
+$totalHarga = $data['totalHarga'];
+$gambar = $data['gambar'];
 
-// Cek dan ubah level dari array ke string jika perlu
-$levelRaw   = $data['level'] ?? '-';
-$level      = is_array($levelRaw) ? implode(', ', $levelRaw) : $levelRaw;
+// Pastikan user ID tersedia (misal dari session atau login)
+$user_id = $_SESSION['user_id'] ?? 1; // Gantilah ini sesuai dengan cara Anda mengelola session user
 
-// Validasi data wajib
-if ($nama === '' || $harga <= 0 || $jumlah <= 0) {
-    echo json_encode(["success" => false, "message" => "Data tidak lengkap atau tidak valid."]);
-    exit;
-}
-
-// Simpan ke database
-$stmt = $koneksi->prepare("INSERT INTO keranjang (nama, gambar, level, catatan, jumlah, harga, total, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssiiiii", $nama, $gambar, $level, $catatan, $jumlah, $harga, $total, $user_id);
+// Query untuk menambahkan pesanan ke keranjang
+$query = "INSERT INTO keranjang (user_id, nama, harga, jumlah, level, catatan, total, gambar) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $koneksi->prepare($query);
+$stmt->bind_param("isiiisis", $user_id, $nama, $hargaSatuan, $jumlah, $level, $catatan, $totalHarga, $gambar);
 
 if ($stmt->execute()) {
-    // Ambil jumlah total item dalam keranjang untuk feedback
-    $result = $koneksi->query("SELECT SUM(jumlah) as total_item FROM keranjang WHERE user_id = $user_id");
-    $row = $result->fetch_assoc();
-    $totalItem = $row['total_item'] ?? 0;
-
-    echo json_encode([
+    // Mengirimkan data kembali setelah berhasil
+    $response = [
         "success" => true,
-        "message" => "Pesanan berhasil ditambahkan.",
-        "jumlah" => $totalItem
-    ]);
+        "message" => "Pesanan berhasil ditambahkan ke keranjang.",
+        "jumlah" => getJumlahKeranjang($user_id) // Mengambil jumlah pesanan di keranjang
+    ];
 } else {
-    echo json_encode([
+    // Menangani kesalahan
+    $response = [
         "success" => false,
-        "message" => "Gagal menyimpan ke database: " . $stmt->error
-    ]);
+        "message" => "Gagal menambahkan pesanan ke keranjang."
+    ];
+}
+
+echo json_encode($response);
+
+// Fungsi untuk menghitung jumlah pesanan dalam keranjang
+function getJumlahKeranjang($user_id) {
+    global $koneksi;
+    $sql = "SELECT SUM(jumlah) AS total FROM keranjang WHERE user_id = ?";
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['total'] ?? 0;
 }
 ?>

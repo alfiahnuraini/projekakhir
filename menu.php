@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+include 'koneksi.php';
 
 // Ambil data produk dari database
 $query = "SELECT * FROM produk";
@@ -77,16 +77,19 @@ if ($resultJumlah && $rowJumlah = $resultJumlah->fetch_assoc()) {
                             <p>Rp <?= number_format($produk['harga'], 0, ',', '.') ?></p>
 
                             <?php if ($kategori === 'mie'): ?>
-                                <a href="detail.php?id=<?= $produk['id'] ?>">
+                                <a href="detail_menu.php?id=<?= $produk['id'] ?>">
                                     <button>Tambah</button>
                                 </a>
-                            <?php else: ?>
-                                <button onclick="tambahKeKeranjang(
-                                    '<?= htmlspecialchars($produk['nama'], ENT_QUOTES) ?>',
-                                    <?= $produk['harga'] ?>,
-                                    '<?= htmlspecialchars($produk['gambar'], ENT_QUOTES) ?>'
-                                )">Tambah</button>
-                            <?php endif; ?>
+                                <?php else: ?>
+                                    <button 
+                                        class="btn-tambah" 
+                                        data-nama="<?= htmlspecialchars($produk['nama']) ?>" 
+                                        data-harga="<?= $produk['harga'] ?>" 
+                                        data-gambar="<?= htmlspecialchars($produk['gambar']) ?>" 
+                                        data-kategori="<?= $kategori ?>">
+                                        Tambah
+                                    </button>
+                                <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -132,38 +135,42 @@ function searchProduct() {
 
     return false;
 }
-
-function updateCartCount() {
-    fetch('cek_keranjang.php')
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('cart-count').textContent = data.jumlah;
-    });
-}
-
-function tambahKeKeranjang(nama, harga, gambar) {
-    const jumlah = 1;
-    const total = harga * jumlah;
-
-    const data = new URLSearchParams();
-    data.append('nama', nama);
-    data.append('harga', harga);
-    data.append('jumlah', jumlah);
-    data.append('total', total);
-    data.append('gambar', gambar);
-
-    fetch('tambah_keranjang.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: data.toString()
-    })
-    .then(res => res.text())
-    .then(response => {
-        alert("Berhasil ditambahkan ke keranjang");
-        updateCartCount();
-    });
-}
 </script>
+<script>
+document.querySelectorAll('.btn-tambah').forEach(button => {
+    button.addEventListener('click', () => {
+        const data = {
+            nama: button.dataset.nama,
+            hargaSatuan: parseInt(button.dataset.harga),
+            totalHarga: parseInt(button.dataset.harga),
+            gambar: button.dataset.gambar,
+            jumlah: 1,
+            level: '-',
+            catatan: ''
+        };
+
+        fetch('tambah_keranjang.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.success) {
+                alert(response.message);
+                document.getElementById('cart-count').textContent = response.jumlah;
+            } else {
+                alert(response.message);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Terjadi kesalahan.");
+        });
+    });
+});
+</script>
+
 
 </body>
 </html>

@@ -1,7 +1,0 @@
-Array
-(
-    [namaProduk] => Udang Rambutan
-    [harga] => 8.000
-    [stok] => 8
-    [kategori] => Makanan
-)

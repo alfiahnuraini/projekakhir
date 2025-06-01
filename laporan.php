@@ -92,7 +92,31 @@
         </div>
         </div>
 </div>
-<script src="./script-laporan.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const laporanList = JSON.parse(localStorage.getItem('LaporanList')) || [];
+    const tabel = document.getElementById("dataBaru");
+
+    laporanList.forEach((item, index) => {
+        const row  = tabel.insertRow();
+        row.innerHTML = `
+            <td>${(index + 1)}</td>
+            <td>${item.noMeja}</td>
+            <td>${item.namaProduk}</td>
+            <td>${item.jmlh}</td>
+            <td>${parseInt(item.subtotal).toLocaleString("id-ID")}</td>
+            <td>${item.tanggal}</td>
+        `;
+    });
+});
+
+document.getElementById("tombolHapus").addEventListener("click", function () {
+    if (confirm("Yakin ingin menghapus semua laporan?")) {
+        localStorage.removeItem('LaporanList');
+        location.reload();
+    }
+});
+</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

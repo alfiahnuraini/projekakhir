@@ -62,6 +62,7 @@
 <body>
 
 <div class="menu-container">
+<<<<<<< HEAD
   <img src="mie.jpg" alt="Mie Kangen">
   <h2>Mie Kangen</h2>
   <p id="harga-satuan">Rp 10.000</p>
@@ -92,6 +93,39 @@
     <button onclick="tambah()">+</button>
   </div>
 
+=======
+  <img src="mie.jpg" alt="Mie Kangen" id="gambar-mie">
+  <h2 id="nama-mie">Mie Kangen</h2>
+  <p id="harga-satuan">Rp 10.000</p>
+
+    <h3>Pilih Level</h3>
+    <div class="levelclass">
+      <div class="level">
+        <label><input type="checkbox" value="1"> Lv. 1</label>
+        <label><input type="checkbox" value="2"> Lv. 2</label>
+        <label><input type="checkbox" value="3"> Lv. 3</label>
+        <label><input type="checkbox" value="4"> Lv. 4</label>
+      </div>
+      <div class="level">
+        <label><input type="checkbox" value="5"> Lv. 5</label>
+        <label><input type="checkbox" value="6"> Lv. 6</label>
+        <label><input type="checkbox" value="7"> Lv. 7</label>
+        <label><input type="checkbox" value="8"> Lv. 8</label>
+      </div>
+    </div>
+  
+    
+  <h3>Catatan (opsional)</h3>
+  <textarea rows="3" style="width: 100%;" id="catatan"></textarea>
+
+  <h3>Jumlah Pesanan</h3>
+  <div class="tombol">
+    <button onclick="kurang()">-</button>
+    <input type="text" id="jumlah" value="1" readonly>
+    <button onclick="tambah()">+</button>
+  </div>
+
+>>>>>>> 7fe32b7944557128d73c77b93b80a38e1f13f4d3
   <button class="btn-pesan" id="btn-pesan" onclick="tambahPesanan()">Tambah Pesanan - Rp 10.000</button>
 </div>
 
@@ -119,6 +153,7 @@
   }
 
   function tambahPesanan() {
+<<<<<<< HEAD
     const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
     const selectedLevels = Array.from(levelCheckboxes)
       .filter(cb => cb.checked)
@@ -141,7 +176,55 @@
     localStorage.setItem("keranjang", JSON.stringify(semuaPesanan));
     window.location.href = "keranjang.html";
   }
-</script>
+=======
+  const namaMie = document.getElementById("nama-mie")?.innerText || "";
+  const gambarMie = document.getElementById("gambar-mie")?.src || "";
+  const harga = hargaSatuan;
 
+  const levelCheckboxes = document.querySelectorAll('.levelclass input[type="checkbox"]');
+  const selectedLevels = Array.from(levelCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+
+  const catatan = document.getElementById("catatan")?.value || "";
+  const totalHarga = harga * jumlah;
+
+  const pesananBaru = {
+    nama: namaMie,
+    gambar: gambarMie,
+    level: selectedLevels,
+    catatan: catatan,
+    jumlah: jumlah,
+    hargaSatuan: harga,
+    totalHarga: totalHarga
+  };
+
+  // Debug: Lihat isi data sebelum dikirim
+  console.log("Mengirim data:", pesananBaru);
+
+  fetch("tambah_keranjang.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(pesananBaru)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("Pesanan berhasil ditambahkan!");
+      window.location.href = "keranjang.php";
+    } else {
+      alert("Gagal menambahkan pesanan: " + data.message);
+    }
+  })
+  .catch(error => {
+    console.error("Fetch error:", error);
+    alert("Terjadi kesalahan saat mengirim pesanan.");
+  });
+}
+
+>>>>>>> 7fe32b7944557128d73c77b93b80a38e1f13f4d3
+</script>
 </body>
 </html>

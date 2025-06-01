@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kedai Saung Bahagia</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff5dc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fffaf1;
+      border-radius: 10px;
+    }
+
+    header {
+      background-color: #f7943e;
+      color: #3b240b;
+      padding: 20px;
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #3b240b;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .menu h2 {
+      color: #3b240b;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .menu h3 {
+      color: #3b240b;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .menu h4 {
+      color: #3b240b;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .menu-items {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      background-color: #fff0d0;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      width: 140px;
+    }
+
+    .item img,
+    .placeholder {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 10px;
+      display: block;
+    }
+
+    .placeholder {
+      background-color: #ffeec0;
+      border-radius: 50%;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #3b240b;
+    }
+
+    .price {
+      margin: 5px 0;
+      color: #3b240b;
+    }
+
+    button {
+      background-color: #f7943e;
+      border: none;
+      padding: 5px 10px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .order {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .order p {
+      color: #3b240b;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    #order-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 10px;
+      color: #3b240b;
+    }
+
+    .item p {
+        font-size: 16px;
+        font-weight: bold;
+        color: #3b240b;
+    }
+
+    .namapelanggan {
+        margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Form Pesanan Takeaway</h1>
+      <nav>
+        <a href="bayar.html">></a>
+      </nav>
+    </header>
+
+    <section class="menu">
+      <h2>Mie</h2>
+      <div class="menu-items">
+        <div class="item">
+          <img src= "DIMSUM.jpg" alt="Mie Kangen" />
+          <p class="name">Mie Kangen</p>
+          <p class="price">10.000</p>
+
+          <!--LEVEL-->
+          <p>Pilih Level</p>
+        <div class="levelclass">
+        <div class="level">
+          <label><input type="checkbox"> Lv. 1</label>
+          <label><input type="checkbox"> Lv. 2</label>
+          <label><input type="checkbox"> Lv. 3</label>
+          <label><input type="checkbox"> Lv. 4</label>
+        </div>
+        <div class="level">
+          <label><input type="checkbox"> Lv. 5</label>
+          <label><input type="checkbox"> Lv. 6</label>
+          <label><input type="checkbox"> Lv. 7</label>
+          <label><input type="checkbox"> Lv. 8</label>
+        </div>
+        </div>
+          <button onclick="tambahPesanan('Mie Kangen', 10000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Mie Happy</p>
+          <p class="price">10.000</p>
+          <!--LEVEL-->
+          <p>Pilih Level</p>
+        <div class="levelclass">
+        <div class="level">
+          <label><input type="checkbox"> Lv. 1</label>
+          <label><input type="checkbox"> Lv. 2</label>
+          <label><input type="checkbox"> Lv. 3</label>
+          <label><input type="checkbox"> Lv. 4</label>
+        </div>
+        <div class="level">
+          <label><input type="checkbox"> Lv. 5</label>
+          <label><input type="checkbox"> Lv. 6</label>
+          <label><input type="checkbox"> Lv. 7</label>
+          <label><input type="checkbox"> Lv. 8</label>
+        </div>
+        </div>
+          <button onclick="tambahPesanan('Mie Happy', 10000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Mie Jebew</p>
+          <p class="price">10.000</p>
+          <!--LEVEL-->
+          <p>Pilih Level</p>
+        <div class="levelclass">
+        <div class="level">
+          <label><input type="checkbox"> Lv. 1</label>
+          <label><input type="checkbox"> Lv. 2</label>
+          <label><input type="checkbox"> Lv. 3</label>
+          <label><input type="checkbox"> Lv. 4</label>
+        </div>
+        <div class="level">
+          <label><input type="checkbox"> Lv. 5</label>
+          <label><input type="checkbox"> Lv. 6</label>
+          <label><input type="checkbox"> Lv. 7</label>
+          <label><input type="checkbox"> Lv. 8</label>
+        </div>
+        </div>
+          <button onclick="tambahPesanan('Mie Jebew', 10000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Mie Angel </p>
+          <p class="price">10.000</p>
+          <button onclick="tambahPesanan('Mie Angel ', 10000)">Tambah</button>
+        </div>
+      </div>
+
+      <!--Camilan-->
+      <h3>Camilan</h3>
+      <div class="menu-items">
+        <div class="item">
+          <img src="https://i.imgur.com/dZlUJLI.png" alt="Dimsum Ayam" />
+          <p class="name">Dimsum Ayam</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Dimsum Ayam', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Udang Keju</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Udang keju', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Udang Rambutan</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Udang Rambutan', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Pangsit</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Pangsit', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Nugget Goreng</p>
+            <p class="price">5000</p>
+            <button onclick="tambahPesanan('Nugget Goreng', 5000)">Tambah</button>
+          </div>
+          <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Sosis Goreng</p>
+            <p class="price">5000</p>
+            <button onclick="tambahPesanan('Sosis Goreng', 5000)">Tambah</button>
+          </div>
+          <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Cireng</p>
+            <p class="price">5000</p>
+            <button onclick="tambahPesanan('Cireng', 5000)">Tambah</button>
+          </div>
+      </div>
+
+      <!--Minuman-->
+      <h3>Minuman</h3>
+      <div class="menu-items">
+        <div class="item">
+          <img src="https://i.imgur.com/dZlUJLI.png" alt="Es Teh" />
+          <p class="name">Es Teh</p>
+          <p class="price">3000</p>
+          <button onclick="tambahPesanan('Es Teh', 3000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Es Nutrisari</p>
+          <p class="price">3000</p>
+          <button onclick="tambahPesanan('Es Nutrisari', 3000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Es Taro</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Es Taro', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+          <div class="placeholder"></div>
+          <p class="name">Es Red velvet</p>
+          <p class="price">6000</p>
+          <button onclick="tambahPesanan('Es Redvelved', 6000)">Tambah</button>
+        </div>
+        <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Es Greentea Matcha</p>
+            <p class="price">6000</p>
+            <button onclick="tambahPesanan('Es Grentea Matcha', 6000)">Tambah</button>
+          </div>
+          <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Es Coklat</p>
+            <p class="price">6000</p>
+            <button onclick="tambahPesanan('Es Coklat', 6000)">Tambah</button>
+          </div>
+          <div class="item">
+            <div class="placeholder"></div>
+            <p class="name">Es Cappucino</p>
+            <p class="price">6000</p>
+            <button onclick="tambahPesanan('Es Cappucino', 6000)">Tambah</button>
+          </div>
+      </div>
+    </section>
+
+    <div class="namapelanggan">
+        <label for="nama"> Masukkan Nama Pembeli</label><br>
+        <input type="text" id="nama-pembeli" /> <button onclick="setNama()">Done</button>
+    </div>
+
+    <section class="order" id="order-section">
+      <div class="left">
+        <p>Pesanan atas nama <span id="nama-display"></span></p>
+        <ul id="order-list"></ul>
+      </div>
+      <div class="right">
+        <p id="total">Total: Rp0</p>
+        <button>Checkout</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let total = 0;
+  
+    function formatRupiah(angka) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+      }).format(angka);
+    }
+  
+    // Biar checkbox cuma bisa satu
+    document.querySelectorAll('.item').forEach(item => {
+      const checkboxes = item.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          checkboxes.forEach(cb => {
+            if (cb !== checkbox) cb.checked = false;
+          });
+        });
+      });
+    });
+
+    function setNama() {
+        const input = document.getElementById("nama-pembeli");
+        const nama = input.value.trim();
+
+        if (nama === "") {
+            alert("Nama pembeli tidak boleh kosong!");
+            return;
+        }
+
+        document.getElementById("nama-display").textContent = nama;
+        input.value = "";
+    }
+  
+    function tambahPesanan(nama, harga) {
+  const items = document.querySelectorAll('.item');
+  let levelText = "";
+  let selectedCheckbox = null;
+
+  for (const item of items) {
+    const name = item.querySelector('.name').textContent.trim();
+    if (name === nama) {
+      const checkboxes = item.querySelectorAll('input[type="checkbox"]');
+      const selected = item.querySelector('input[type="checkbox"]:checked');
+
+      // Kalau ada pilihan level, wajib dipilih
+      if (checkboxes.length > 0) {
+        if (!selected) {
+          alert(Silakan pilih level untuk ${nama} terlebih dahulu!);
+          return;
+        } else {
+          levelText = ` - ${selected.parentElement.textContent.trim()}`;
+          selectedCheckbox = selected;
+        }
+      }
+      break;
+    }
+  }
+
+  const orderList = document.getElementById("order-list");
+  const item = document.createElement("li");
+
+  // Buat tombol hapus di kiri
+  const hapusBtn = document.createElement("button");
+  hapusBtn.textContent = "Hapus";
+  hapusBtn.style.marginRight = "10px";
+  hapusBtn.style.backgroundColor = "#c0392b";
+  hapusBtn.style.border = "none";
+  hapusBtn.style.color = "white";
+  hapusBtn.style.borderRadius = "5px";
+  hapusBtn.style.padding = "2px 6px";
+  hapusBtn.style.cursor = "pointer";
+
+  hapusBtn.onclick = () => {
+    orderList.removeChild(item);
+    total -= harga;
+    document.getElementById("total").textContent = Total: ${formatRupiah(total)};
+  };
+
+  item.appendChild(hapusBtn);
+  item.append(` ${nama}${levelText} - ${formatRupiah(harga)}`);
+  orderList.appendChild(item);
+
+  total += harga;
+  document.getElementById("total").textContent = Total: ${formatRupiah(total)};
+
+  // Reset checkbox
+  if (selectedCheckbox) {
+    selectedCheckbox.checked = false;
+  }
+
+  // Scroll otomatis ke bagian pesanan
+  document.getElementById("order-section").scrollIntoView({ behavior: "smooth" });
+}
+  </script>
+</body>
+</html>

@@ -207,21 +207,6 @@ while ($row = $result->fetch_assoc()) {
           idToDelete.push(id);
         });
 
-        // Kirim ke checkout.php
-  await fetch('checkout.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(laporanList)
-  }).then(res => res.json()).then(response => {
-    if (response.status !== "success") {
-      alert("Gagal menyimpan laporan: " + response.message);
-      return;
-    }
-  }).catch(err => {
-    alert("Gagal terhubung ke server.");
-    return;
-  });
-
         localStorage.setItem('LaporanList', JSON.stringify(laporanList));
 
         // Hapus data dari database

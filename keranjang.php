@@ -185,13 +185,13 @@ function ubahJumlah(id, perubahan) {
     fetch('ubah_jumlah.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `id=${id}&aksi=${aksi}`
+        body: id=${id}&aksi=${aksi}
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             if (data.hapus) {
-                const elemen = document.querySelector(`[data-id="${id}"]`);
+                const elemen = document.querySelector([data-id="${id}"]);
                 if (elemen) elemen.remove();
             } else {
                 document.getElementById('jumlah-' + id).textContent = data.jumlah;

@@ -139,7 +139,7 @@
     <header>
       <h1>Form Pesanan Takeaway</h1>
       <nav>
-        <a href="bayar.html">></a>
+        <a href="bayar.php">></a>
       </nav>
     </header>
 

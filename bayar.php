@@ -32,102 +32,101 @@ while ($row = $result->fetch_assoc()) {
   <meta charset="UTF-8" />
   <title>Pembayaran</title>
   <style>
-    .nav{
-        width: 1270px;
-        height: 60px;
-        background-color: rgb(118, 234, 217);
-        margin-left: 30px;
-        margin-bottom: 5px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-left: 65px;
-        margin-top: -8px;
-        }
-        .nav a{
-            align-items: center;
-            color: black;
-            margin-top: 8px;
-            margin-right: 30px;
-            font-size: 30px;
-            text-decoration: none;
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .isinav{
-            margin-top: 15px;
-        }
-        .gambar img {
-            width: 65px;
-            height: 65px;
-            margin-left: -550px;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 30px;
-            padding: 20px;
-            width: 1276px;
-            flex-direction: row;
-        }
-        .pesanan1 {
-            width: 350px;
-            border: 1px solid black;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-        .pesanan1 h2 {
-            text-align: center;
-            border-bottom: 1px solid black;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
-        .isi1 {
-            margin-bottom: 15px;
-        }
-        .detail {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-        .catatan {
-            font-size: 12px;
-            color: gray;
-            margin-top: -5px;
-        }
-        .harga {
-            margin-left: 10px;
-        }
-        .jumlah {
-            margin-top: -10px;
-            font-size: 15px;
-        }
-        .bawah {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid black;
-            padding-top: 10px;
-        }
-        .bawah button {
-            background-color: #0d92ff;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .bawah button:hover {
-            background-color: #0071cc;
-        }
-        .takeaway {
-          position: absolute;
-          font-size: 18px;
-          right: 20px;
-          padding-top: 13px;
-        }
+    .nav {
+      width: 1270px;
+      height: 60px;
+      background-color: rgb(118, 234, 217);
+      margin-left: 65px;
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: -8px;
+    }
+    .nav a {
+      align-items: center;
+      color: black;
+      margin-top: 8px;
+      margin-right: 30px;
+      font-size: 30px;
+      text-decoration: none;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    .isinav {
+      margin-top: 15px;
+    }
+    .gambar img {
+      width: 65px;
+      height: 65px;
+      margin-left: -550px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      padding: 20px;
+      width: 1276px;
+      flex-direction: row;
+    }
+    .pesanan1 {
+      width: 350px;
+      border: 1px solid black;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+    .pesanan1 h2 {
+      text-align: center;
+      border-bottom: 1px solid black;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .isi1 {
+      margin-bottom: 15px;
+    }
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .catatan {
+      font-size: 12px;
+      color: gray;
+      margin-top: -5px;
+    }
+    .harga {
+      margin-left: 10px;
+    }
+    .jumlah {
+      margin-top: -10px;
+      font-size: 15px;
+    }
+    .bawah {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid black;
+      padding-top: 10px;
+    }
+    .bawah button {
+      background-color: #0d92ff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .bawah button:hover {
+      background-color: #0071cc;
+    }
+    .takeaway {
+      position: absolute;
+      font-size: 18px;
+      right: 20px;
+      padding-top: 13px;
+    }
   </style>
 </head>
 <body>
@@ -139,7 +138,7 @@ while ($row = $result->fetch_assoc()) {
       <a href="laporan.php">Laporan</a>
     </div>
     <div class="takeaway">
-      <a href="form.php">Take Away</a> 
+      <a href="form.html">Take Away</a> 
     </div>
   </div>
 
@@ -176,50 +175,57 @@ while ($row = $result->fetch_assoc()) {
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const tombolBayarSemua = document.querySelectorAll(".bayar-btn");
+    document.addEventListener("DOMContentLoaded", function () {
+      const tombolBayarSemua = document.querySelectorAll(".bayar-btn");
 
-    tombolBayarSemua.forEach(function(tombol) {
-      tombol.addEventListener("click", async function () {
-        const pesananCard = this.closest(".pesanan1");
-        const meja = pesananCard.querySelector(".meja h2").textContent.replace("Meja ", "");
-        const items = pesananCard.querySelectorAll(".detail");
+      tombolBayarSemua.forEach(function(tombol) {
+        tombol.addEventListener("click", async function () {
+          tombol.disabled = true;
 
-        let laporanList = JSON.parse(localStorage.getItem('LaporanList')) || [];
+          const pesananCard = this.closest(".pesanan1");
+          const meja = pesananCard.querySelector(".meja h2").textContent.replace("Meja ", "");
+          const items = pesananCard.querySelectorAll(".detail");
 
-        const idToDelete = [];
+          const dataLaporan = [];
+          const idToDelete = [];
 
-        items.forEach(item => {
-          const id = item.dataset.id;
-          const namaProduk = item.querySelector(".produk").textContent;
-          const jumlah = item.querySelector(".jumlah").textContent.split("x")[0].trim();
-          const subtotal = item.querySelector(".harga").textContent.replace("= ", "").replace(/\./g, "").trim();
+          items.forEach(item => {
+            const id = item.dataset.id;
+            const namaProdukFull = item.querySelector(".produk").textContent;
+            const namaProduk = namaProdukFull.split(" lv.")[0]; // buang "lv.x"
+            const jumlah = parseInt(item.querySelector(".jumlah").textContent.split("x")[0].trim());
+            const subtotal = parseInt(item.querySelector(".harga").textContent.replace("= ", "").replace(/\./g, "").trim());
 
-          const laporan = {
-            noMeja: meja,
-            namaProduk: namaProduk,
-            jmlh: jumlah,
-            subtotal: parseInt(subtotal),
-            tanggal: new Date().toLocaleString("id-ID")
-          };
+            dataLaporan.push({
+              no_meja: meja,
+              nama_produk: namaProduk,
+              jumlah: jumlah,
+              subtotal: subtotal,
+              tanggal: new Date().toISOString().slice(0, 19).replace('T', ' ')
+            });
 
-          laporanList.push(laporan);
-          idToDelete.push(id);
-        });
+            idToDelete.push(id);
+          });
 
-        localStorage.setItem('LaporanList', JSON.stringify(laporanList));
+          // Kirim laporan ke database
+          await fetch("co.php", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ laporan: dataLaporan })
+          });
 
-        // Hapus data dari database
-        fetch('hapus-pesanan.php', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ ids: idToDelete })
-        }).then(() => {
+          // Hapus pesanan dari database
+          await fetch("hapus-pesanan.php", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ ids: idToDelete })
+          });
+
+          // Hapus elemen dari halaman
           pesananCard.remove();
         });
       });
     });
-  });
   </script>
 </body>
 </html>

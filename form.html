@@ -383,7 +383,7 @@
       // Kalau ada pilihan level, wajib dipilih
       if (checkboxes.length > 0) {
         if (!selected) {
-          alert(Silakan pilih level untuk ${nama} terlebih dahulu!);
+          alert(`Silakan pilih level untuk ${nama} terlebih dahulu!`);
           return;
         } else {
           levelText = ` - ${selected.parentElement.textContent.trim()}`;
@@ -411,7 +411,7 @@
   hapusBtn.onclick = () => {
     orderList.removeChild(item);
     total -= harga;
-    document.getElementById("total").textContent = Total: ${formatRupiah(total)};
+    document.getElementById`("total").textContent = Total: ${formatRupiah(total)}`;
   };
 
   item.appendChild(hapusBtn);
@@ -419,7 +419,7 @@
   orderList.appendChild(item);
 
   total += harga;
-  document.getElementById("total").textContent = Total: ${formatRupiah(total)};
+  document.getElementById`("total").textContent = Total: ${formatRupiah(total)}`;
 
   // Reset checkbox
   if (selectedCheckbox) {

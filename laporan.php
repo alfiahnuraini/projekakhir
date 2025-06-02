@@ -1,3 +1,8 @@
+<?php
+include 'koneksi.php';
+$hasil = $koneksi->query("SELECT * FROM laporan ORDER BY tanggal DESC");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,40 +88,37 @@
                 <th>Subtotal</th>
                 <th>Tanggal</th>
             </thead>
-            <tbody id="dataBaru"></tbody>
+            <!-- HTML bagian tabel -->
+<tbody>
+<?php 
+$no = 1;
+while ($row = $hasil->fetch_assoc()): 
+?>
+<tr>
+    <td><?= $no++ ?></td>
+    <td><?= htmlspecialchars($row['no_meja']) ?></td>
+    <td><?= htmlspecialchars($row['nama_produk']) ?></td>
+    <td><?= $row['jumlah'] ?></td>
+    <td><?= number_format($row['subtotal'], 0, ',', '.') ?></td>
+    <td><?= $row['tanggal'] ?></td>
+</tr>
+<?php endwhile;?>
+</tbody>
               </table>
           </div>
            <div class="hapus">
-        <button id="tombolHapus" class="btn-btn-danger" on click="hapusLaporan()">Hapus</button>
+        <button onclick="hapusLaporan()">Hapus</button>
+        <script>
+            function hapusLaporan() {
+                if(confirm("Yakin ingin menghapus semua laporan?")) {
+                    window.location.href = "hapus-laporan.php";
+                }
+            }
+            </script>
         </div>
         </div>
         </div>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const laporanList = JSON.parse(localStorage.getItem('LaporanList')) || [];
-    const tabel = document.getElementById("dataBaru");
-
-    laporanList.forEach((item, index) => {
-        const row  = tabel.insertRow();
-        row.innerHTML = `
-            <td>${(index + 1)}</td>
-            <td>${item.noMeja}</td>
-            <td>${item.namaProduk}</td>
-            <td>${item.jmlh}</td>
-            <td>${parseInt(item.subtotal).toLocaleString("id-ID")}</td>
-            <td>${item.tanggal}</td>
-        `;
-    });
-});
-
-document.getElementById("tombolHapus").addEventListener("click", function () {
-    if (confirm("Yakin ingin menghapus semua laporan?")) {
-        localStorage.removeItem('LaporanList');
-        location.reload();
-    }
-});
-</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

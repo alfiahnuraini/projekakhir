@@ -154,7 +154,7 @@ while ($row = $result->fetch_assoc()) {
         </div>
 
         <form action="pesanan.php" method="POST">
-            <button type="submit" class="checkout-btn">Checkout</button>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
         </form>
 
         <form action="menu.php" method="POST">
@@ -203,6 +203,54 @@ function ubahJumlah(id, perubahan) {
         } else {
             alert("Gagal memperbarui jumlah");
         }
+    });
+}
+</script>
+
+<script>
+function checkout() {
+    const pesanan = [];
+
+    document.querySelectorAll('.pesanan-card').forEach(card => {
+        const id = card.getAttribute('data-id');
+        const namaProduk = card.querySelector('strong').textContent;
+        const jumlah = parseInt(card.querySelector('.jumlah-display').textContent);
+        const totalText = card.querySelector('.total-item').dataset.total;
+        const subtotal = parseInt(totalText);
+        const noMeja = 'Meja ' + (Math.floor(Math.random() * 10) + 1);
+        const tanggal = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+        pesanan.push({
+            namaProduk,
+            jmlh: jumlah,
+            subtotal,
+            noMeja,
+            tanggal
+        });
+    });
+
+    if (pesanan.length === 0) {
+        alert('Keranjang kosong!');
+        return;
+    }
+
+    fetch('checkout.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pesanan)
+    })
+    .then(res => res.json())
+    .then(response => {
+        if (response.status === 'success') {
+            alert('Checkout berhasil!');
+            window.location.href = 'pesanan.php';
+        } else {
+            alert('Gagal checkout: ' + response.message);
+        }
+    })
+    .catch(err => {
+        alert('Terjadi kesalahan!');
+        console.error(err);
     });
 }
 </script>

@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "saung_bahagia"; // Ganti sesuai nama database kamu
+$db = "saung_bahagia";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 

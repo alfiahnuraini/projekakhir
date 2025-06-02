@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Keranjang SB</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: antiquewhite;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 50px;
+    }
+
+    .keranjang-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+
+    .item-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .item-info img {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      margin-right: 20px;
+    }
+
+    .item-info p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .Tmbh {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .Tmbh button {
+      padding: 5px 10px;
+      width: 50px;
+      height: 50px;
+    }
+
+    .jumlah-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkout {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .checkout button {
+      padding: 10px 20px;
+      font-size: 30px;
+      background-color: #0d92ff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      width: 200px;
+      height: 70px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Keranjang Anda</h1>
+
+<div class="checkout">
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+  window.onload = function() {
+    const semuaPesanan = JSON.parse(localStorage.getItem("keranjang")) || [];
+
+    semuaPesanan.forEach((pesanan, index) => {
+      const container = document.createElement("div");
+      container.classList.add("keranjang-item");
+      container.setAttribute("data-harga", pesanan.hargaSatuan);
+      container.setAttribute("data-index", index);
+
+      container.innerHTML = `
+        <div class="item-info">
+          <img src="${pesanan.gambar}">
+          <div>
+            <p><strong>${pesanan.nama}</strong></p>
+            <p>Rp <span class="harga">${pesanan.hargaSatuan.toLocaleString('id-ID')}</span></p>
+            <p>Level: ${(Array.isArray(pesanan.level) ? pesanan.level.join(", ") : "-")}</p>
+            <p>Catatan: ${pesanan.catatan || "-"}</p>
+          </div>
+        </div>
+        <div class="jumlah-container">
+          <div class="Tmbh">
+            <button onclick="ubahJumlah(this, -1)">-</button>
+            <span class="jml">${pesanan.jumlah}</span>
+            <button onclick="ubahJumlah(this, 1)">+</button>
+          </div>
+          <div>= Rp <span class="total">${pesanan.totalHarga.toLocaleString('id-ID')}</span></div>
+        </div>
+      `;
+
+      document.querySelector(".checkout").before(container);
+    });
+  }
+
+  function ubahJumlah(button, delta) {
+    const keranjangItem = button.closest('.keranjang-item');
+    const jmlSpan = keranjangItem.querySelector('.jml');
+    const harga = parseInt(keranjangItem.getAttribute('data-harga'));
+    const index = parseInt(keranjangItem.getAttribute('data-index'));
+    let jumlah = parseInt(jmlSpan.textContent) + delta;
+    if (jumlah < 1) jumlah = 1;
+    jmlSpan.textContent = jumlah;
+
+    const total = harga * jumlah;
+    keranjangItem.querySelector('.total').textContent = total.toLocaleString('id-ID');
+
+    let semuaPesanan = JSON.parse(localStorage.getItem("keranjang")) || [];
+    semuaPesanan[index].jumlah = jumlah;
+    semuaPesanan[index].totalHarga = total;
+    localStorage.setItem("keranjang", JSON.stringify(semuaPesanan));
+  }
+
+  function checkout() {
+    alert('Checkout berhasil!');
+    localStorage.removeItem("keranjang");
+    window.location.href = 'menu.html';
+  }
+</script>
+
+</body>
+</html>

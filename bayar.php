@@ -209,7 +209,7 @@ while ($row = $result->fetch_assoc()) {
 
         localStorage.setItem('LaporanList', JSON.stringify(laporanList));
 
-        // Hapus data dari database (via API sederhana)
+        // Hapus data dari database
         fetch('hapus-pesanan.php', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},

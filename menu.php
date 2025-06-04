@@ -45,7 +45,7 @@ if ($resultJumlah && $rowJumlah = $resultJumlah->fetch_assoc()) {
     <div class="navbar">
         <div class="gambar"><img src="saung-removebg-preview.png" /></div>
         <div class="isinavbar">
-            <a href="home.html">HOME</a>
+            <a href="home.php">HOME</a>
             <a href="menu.php">MENU</a>
             <a href="pesanan.php">PESANAN</a>
         </div>
@@ -116,7 +116,7 @@ function searchProduct() {
     const kategoriList = ["mie", "camilan", "minuman"];
 
     kategoriList.forEach(kategori => {
-        const container = document.querySelector(`.${kategori}`);
+        const container = document.querySelector(.${kategori});
         const title = container?.previousElementSibling;
         let matchFound = false;
 
@@ -137,8 +137,8 @@ function searchProduct() {
 
             if (keyword === "") {
                 kategoriList.forEach(k => {
-                    document.querySelector(`.${k}`).style.display = "flex";
-                    const titleEl = document.querySelector(`.${k}`).previousElementSibling;
+                    document.querySelector(.${k}).style.display = "flex";
+                    const titleEl = document.querySelector(.${k}).previousElementSibling;
                     if (titleEl) titleEl.style.display = "block";
                 });
             }
@@ -187,7 +187,7 @@ document.querySelectorAll('.btn-tambah').forEach(button => {
         } else {
             // Jika bukan 'mie angel', arahkan ke halaman detail_menu.php
             const produkId = button.dataset.id;  // Ambil ID produk
-            window.location.href = `detail_menu.php?id=${produkId}`;
+            window.location.href = detail_menu.php?id=${produkId};
         }
     });
 });

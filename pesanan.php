@@ -6,7 +6,7 @@ include 'koneksi.php';
 $user_id = $_SESSION['user_id'] ?? 1;
 
 // Ambil nomor meja dari POST (karena dari form checkout)
-$meja = $_POST['meja'] ?? 'Tidak diketahui';
+$meja = $_SESSION['meja'] ?? 'Tidak diketahui';
 
 // Ambil data dari keranjang
 $sql_keranjang = "SELECT * FROM keranjang WHERE user_id = ?";
@@ -150,9 +150,9 @@ while ($row = $result->fetch_assoc()) {
 <div class="container">
     <!-- Navbar -->
     <div class="navbar">
-        <div class="gambar"><img src="saung.png" /></div>
+       <div class="gambar"><img src="saung-removebg-preview.png" /></div>
         <div class="isinavbar">
-            <a href="home.html">HOME</a>
+            <a href="home.php">HOME</a>
             <a href="menu.php">MENU</a>
             <a href="pesanan.php">PESANAN</a>
         </div>

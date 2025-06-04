@@ -147,7 +147,7 @@
       <h2>Mie</h2>
       <div class="menu-items">
         <div class="item">
-          <img src= "DIMSUM.jpg" alt="Mie Kangen" />
+          <div class="placeholder"></div>
           <p class="name">Mie Kangen</p>
           <p class="price">10.000</p>
 
@@ -220,100 +220,6 @@
           <button onclick="tambahPesanan('Mie Angel ', 10000)">Tambah</button>
         </div>
       </div>
-
-      <!--Camilan-->
-      <h3>Camilan</h3>
-      <div class="menu-items">
-        <div class="item">
-          <img src="https://i.imgur.com/dZlUJLI.png" alt="Dimsum Ayam" />
-          <p class="name">Dimsum Ayam</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Dimsum Ayam', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Udang Keju</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Udang keju', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Udang Rambutan</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Udang Rambutan', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Pangsit</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Pangsit', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Nugget Goreng</p>
-            <p class="price">5000</p>
-            <button onclick="tambahPesanan('Nugget Goreng', 5000)">Tambah</button>
-          </div>
-          <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Sosis Goreng</p>
-            <p class="price">5000</p>
-            <button onclick="tambahPesanan('Sosis Goreng', 5000)">Tambah</button>
-          </div>
-          <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Cireng</p>
-            <p class="price">5000</p>
-            <button onclick="tambahPesanan('Cireng', 5000)">Tambah</button>
-          </div>
-      </div>
-
-      <!--Minuman-->
-      <h3>Minuman</h3>
-      <div class="menu-items">
-        <div class="item">
-          <img src="https://i.imgur.com/dZlUJLI.png" alt="Es Teh" />
-          <p class="name">Es Teh</p>
-          <p class="price">3000</p>
-          <button onclick="tambahPesanan('Es Teh', 3000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Es Nutrisari</p>
-          <p class="price">3000</p>
-          <button onclick="tambahPesanan('Es Nutrisari', 3000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Es Taro</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Es Taro', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-          <div class="placeholder"></div>
-          <p class="name">Es Red velvet</p>
-          <p class="price">6000</p>
-          <button onclick="tambahPesanan('Es Redvelved', 6000)">Tambah</button>
-        </div>
-        <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Es Greentea Matcha</p>
-            <p class="price">6000</p>
-            <button onclick="tambahPesanan('Es Grentea Matcha', 6000)">Tambah</button>
-          </div>
-          <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Es Coklat</p>
-            <p class="price">6000</p>
-            <button onclick="tambahPesanan('Es Coklat', 6000)">Tambah</button>
-          </div>
-          <div class="item">
-            <div class="placeholder"></div>
-            <p class="name">Es Cappucino</p>
-            <p class="price">6000</p>
-            <button onclick="tambahPesanan('Es Cappucino', 6000)">Tambah</button>
-          </div>
-      </div>
     </section>
 
     <div class="namapelanggan">
@@ -328,107 +234,129 @@
       </div>
       <div class="right">
         <p id="total">Total: Rp0</p>
-        <button>Checkout</button>
+        <button type="button" onclick="checkout()">Checkout</button>
       </div>
     </section>
   </div>
 
   <script>
-    let total = 0;
-  
-    function formatRupiah(angka) {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0
-      }).format(angka);
-    }
-  
-    // Biar checkbox cuma bisa satu
-    document.querySelectorAll('.item').forEach(item => {
-      const checkboxes = item.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-          checkboxes.forEach(cb => {
-            if (cb !== checkbox) cb.checked = false;
-          });
+  let total = 0;
+
+  function formatRupiah(angka) {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }).format(angka);
+  }
+
+  document.querySelectorAll('.item').forEach(item => {
+    const checkboxes = item.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        checkboxes.forEach(cb => {
+          if (cb !== checkbox) cb.checked = false;
         });
       });
     });
+  });
 
-    function setNama() {
-        const input = document.getElementById("nama-pembeli");
-        const nama = input.value.trim();
-
-        if (nama === "") {
-            alert("Nama pembeli tidak boleh kosong!");
-            return;
-        }
-
-        document.getElementById("nama-display").textContent = nama;
-        input.value = "";
+  function setNama() {
+    const input = document.getElementById("nama-pembeli");
+    const nama = input.value.trim();
+    if (nama === "") {
+      alert("Nama pembeli tidak boleh kosong!");
+      return;
     }
-  
-    function tambahPesanan(nama, harga) {
-  const items = document.querySelectorAll('.item');
-  let levelText = "";
-  let selectedCheckbox = null;
 
-  for (const item of items) {
-    const name = item.querySelector('.name').textContent.trim();
-    if (name === nama) {
-      const checkboxes = item.querySelectorAll('input[type="checkbox"]');
-      const selected = item.querySelector('input[type="checkbox"]:checked');
+    document.getElementById("nama-display").textContent = nama;
+    localStorage.setItem("namaPembeli", nama);
+    input.value = "";
+  }
 
-      // Kalau ada pilihan level, wajib dipilih
-      if (checkboxes.length > 0) {
-        if (!selected) {
-          alert(`Silakan pilih level untuk ${nama} terlebih dahulu!`);
-          return;
-        } else {
-          levelText = ` - ${selected.parentElement.textContent.trim()}`;
-          selectedCheckbox = selected;
+  function tambahPesanan(nama, harga) {
+    const items = document.querySelectorAll('.item');
+    let levelText = "";
+
+    for (const item of items) {
+      const name = item.querySelector('.name').textContent.trim();
+      if (name === nama) {
+        const selected = item.querySelector('input[type="checkbox"]:checked');
+        const hasCheckbox = item.querySelectorAll('input[type="checkbox"]').length > 0;
+        if (hasCheckbox) {
+          if (!selected) {
+            alert(`Silakan pilih level untuk ${nama}`);
+            return;
+          }
+          levelText = selected.parentElement.textContent.trim();
         }
+        break;
       }
-      break;
+    }
+
+    const pesanan = {
+      nama: nama,
+      harga: harga,
+      level: levelText
+    };
+
+    let daftarPesanan = JSON.parse(localStorage.getItem("daftarPesanan")) || [];
+    daftarPesanan.push(pesanan);
+    localStorage.setItem("daftarPesanan", JSON.stringify(daftarPesanan));
+
+    renderPesanan();
+  }
+
+  function renderPesanan() {
+    const daftarPesanan = JSON.parse(localStorage.getItem("daftarPesanan")) || [];
+    const list = document.getElementById("order-list");
+    list.innerHTML = "";
+
+    total = 0;
+    daftarPesanan.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.nama}${item.level ? " (" + item.level + ")" : ""} - ${formatRupiah(item.harga)}`;
+      list.appendChild(li);
+      total += item.harga;
+    });
+
+    document.getElementById("total").textContent = "Total: " + formatRupiah(total);
+
+    const nama = localStorage.getItem("namaPembeli");
+    if (nama) {
+      document.getElementById("nama-display").textContent = nama;
     }
   }
 
-  const orderList = document.getElementById("order-list");
-  const item = document.createElement("li");
-
-  // Buat tombol hapus di kiri
-  const hapusBtn = document.createElement("button");
-  hapusBtn.textContent = "Hapus";
-  hapusBtn.style.marginRight = "10px";
-  hapusBtn.style.backgroundColor = "#c0392b";
-  hapusBtn.style.border = "none";
-  hapusBtn.style.color = "white";
-  hapusBtn.style.borderRadius = "5px";
-  hapusBtn.style.padding = "2px 6px";
-  hapusBtn.style.cursor = "pointer";
-
-  hapusBtn.onclick = () => {
-    orderList.removeChild(item);
-    total -= harga;
-    document.getElementById`("total").textContent = Total: ${formatRupiah(total)}`;
+  window.onload = function() {
+    renderPesanan();
   };
 
-  item.appendChild(hapusBtn);
-  item.append(` ${nama}${levelText} - ${formatRupiah(harga)}`);
-  orderList.appendChild(item);
-
-  total += harga;
-  document.getElementById`("total").textContent = Total: ${formatRupiah(total)}`;
-
-  // Reset checkbox
-  if (selectedCheckbox) {
-    selectedCheckbox.checked = false;
+  function checkout() {
+  const nama = localStorage.getItem("namaPembeli");
+  if (!nama) {
+    alert("Silakan masukkan nama pembeli terlebih dahulu.");
+    return;
   }
 
-  // Scroll otomatis ke bagian pesanan
-  document.getElementById("order-section").scrollIntoView({ behavior: "smooth" });
+  const pesanan = JSON.parse(localStorage.getItem("daftarPesanan")) || [];
+  if (pesanan.length === 0) {
+    alert("Belum ada pesanan yang ditambahkan.");
+    return;
+  }
+
+  alert(`Checkout berhasil atas nama ${nama}`);
+
+  // Mengarahkan ke halaman pembayaran
+  window.location.href = "bayar.php";
+  
+  // Hapus data pesanan setelah checkout
+  localStorage.removeItem("daftarPesanan");
+  localStorage.removeItem("namaPembeli");
+
+  renderPesanan();
+  document.getElementById("nama-display").textContent = "";
 }
-  </script>
+</script>
 </body>
 </html>

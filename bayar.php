@@ -2,7 +2,6 @@
 session_start();
 include 'koneksi.php';
 
-// Ambil semua pesanan GROUP BY meja
 $sql = "SELECT meja FROM pesanan GROUP BY meja ORDER BY meja";
 $result = $koneksi->query($sql);
 
@@ -10,8 +9,6 @@ $pesananPerMeja = [];
 
 while ($row = $result->fetch_assoc()) {
     $meja = $row['meja'];
-
-    // Ambil semua pesanan untuk meja ini
     $sqlDetail = "SELECT * FROM pesanan WHERE meja = ? ORDER BY id ASC";
     $stmt = $koneksi->prepare($sqlDetail);
     $stmt->bind_param("s", $meja);
@@ -25,17 +22,17 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Pembayaran</title>
   <style>
+    /* style di sini tetap sama seperti yang kamu punya sebelumnya */
     .nav {
       width: 1270px;
       height: 60px;
-      background-color: rgb(118, 234, 217);
+      background-color: #f7943e;
       margin-left: 65px;
       margin-bottom: 5px;
       display: flex;
@@ -45,7 +42,7 @@ while ($row = $result->fetch_assoc()) {
     }
     .nav a {
       align-items: center;
-      color: black;
+      color: white;
       margin-top: 8px;
       margin-right: 30px;
       font-size: 30px;
@@ -131,7 +128,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
   <div class="nav">
-    <div class="gambar"><img src="saung.png" /></div>
+    <div class="gambar"><img src="saung-removebg-preview.png" /></div>
     <div class="isinav">
       <a href="index.php">Stok</a>
       <a href="bayar.php">Bayar</a>
@@ -172,7 +169,60 @@ while ($row = $result->fetch_assoc()) {
       </div>
     </div>
     <?php endforeach; ?>
+
+    <!-- Bagian pesanan takeaway (dari localStorage) -->
+    <div style="width: 100%;">
+      <h2>Daftar Pesanan Takeaway</h2>
+      <p>Nama Pemesan: <strong id="nama-pemesan">-</strong></p>
+
+
+      <h3>Total Keseluruhan: Rp <span id="total-keseluruhan">0</span></h3>
+    </div>
   </div>
+
+  <table border="1" id="tabelPesanan">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Nama Produk</th>
+      <th>Level</th>
+      <th>Jumlah</th>
+      <th>Harga</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody id="bodyPesanan"></tbody>
+</table>
+
+<script>
+  // Ambil data dari localStorage
+  const pesanan = JSON.parse(localStorage.getItem('daftarPesanan')) || [];
+
+  function tampilkanPesanan() {
+    const tbody = document.getElementById('bodyPesanan');
+    tbody.innerHTML = ''; // Kosongkan isi sebelumnya
+
+    pesanan.forEach((item, index) => {
+      const row = document.createElement('tr');
+
+      const totalHarga = item.harga * item.jumlah;
+
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.nama}</td>
+        <td>${item.level || '-'}</td>
+        <td>${item.jumlah}</td>
+        <td>Rp ${item.harga.toLocaleString()}</td>
+        <td>Rp ${totalHarga.toLocaleString()}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  }
+
+  // Jalankan fungsi saat halaman dimuat
+  document.addEventListener('DOMContentLoaded', tampilkanPesanan);
+</script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -192,40 +242,74 @@ while ($row = $result->fetch_assoc()) {
           items.forEach(item => {
             const id = item.dataset.id;
             const namaProdukFull = item.querySelector(".produk").textContent;
-            const namaProduk = namaProdukFull.split(" lv.")[0]; // buang "lv.x"
+            const namaProduk = namaProdukFull.split(" lv.")[0].trim();
             const jumlah = parseInt(item.querySelector(".jumlah").textContent.split("x")[0].trim());
+            const hargaSatuan = parseInt(item.querySelector(".hargasatuan").textContent.replace(/\./g, "").trim());
             const subtotal = parseInt(item.querySelector(".harga").textContent.replace("= ", "").replace(/\./g, "").trim());
+            const catatanEl = item.querySelector(".catatan");
+            const level = namaProdukFull.includes("lv.") ? namaProdukFull.split("lv.")[1].trim() : "";
+            const catatan = catatanEl ? catatanEl.textContent.replace("Catatan: ", "").trim() : "";
 
             dataLaporan.push({
               no_meja: meja,
               nama_produk: namaProduk,
               jumlah: jumlah,
+              harga: hargaSatuan,
               subtotal: subtotal,
-              tanggal: new Date().toISOString().slice(0, 19).replace('T', ' ')
+              level: level,
+              catatan: catatan
             });
 
             idToDelete.push(id);
           });
 
-          // Kirim laporan ke database
-          await fetch("co.php", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ laporan: dataLaporan })
-          });
-
-          // Hapus pesanan dari database
-          await fetch("hapus-pesanan.php", {
+          // kirim ke co.php
+          fetch('co.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ ids: idToDelete })
-          });
-
-          // Hapus elemen dari halaman
-          pesananCard.remove();
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ laporan: dataLaporan })
+          }).then(res => res.json())
+            .then(res => {
+              if (res.status === 'success') {
+                fetch('hapus-pesanan.php', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ ids: idToDelete })
+                }).then(() => {
+                  pesananCard.remove();
+                });
+              } else {
+                alert("Gagal menyimpan ke laporan!");
+                tombol.disabled = false;
+              }
+            });
         });
       });
     });
   </script>
+<script>
+  // Ambil data pesanan dari sessionStorage
+  const pesanan = JSON.parse(sessionStorage.getItem("pesanan")) || [];
+
+  // Cek jika ada pesanan
+  if (pesanan.length > 0) {
+    const container = document.getElementById("pesanan-container");
+
+    // Loop untuk menampilkan setiap pesanan
+    pesanan.forEach(pesananItem => {
+      const card = document.createElement("div");
+      card.className = "pesanan-card";
+      card.innerHTML = `
+        <h3>${pesananItem.nama}</h3>
+        <p>Jumlah: ${pesananItem.jumlah}</p>
+        <p>Level Pedas: ${pesananItem.level}</p>
+        <p>Harga: Rp${pesananItem.harga}</p>
+      `;
+      container.appendChild(card);
+    });
+  } else {
+    document.getElementById("pesanan-container").innerHTML = "<p>Belum ada pesanan.</p>";
+}
+</script>
 </body>
 </html>

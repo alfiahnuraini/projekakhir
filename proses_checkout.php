@@ -1,15 +1,296 @@
-<?php
+ <?php
+session_start();
+include 'koneksi.php';
+
+$user_id = $_SESSION['user_id'] ?? 1;
+
+$query = $koneksi->prepare("SELECT * FROM keranjang WHERE user_id = ? ORDER BY tanggal DESC");
+$query->bind_param("i", $user_id);
+$query->execute();
+$result = $query->get_result();
+
+$pesanan = [];
+$totalHargaSemua = 0;
+
+while ($row = $result->fetch_assoc()) {
+    $pesanan[] = $row;
+    $totalHargaSemua += $row['total'];
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang</title>
+    <style>
+    .keranjang-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .pesanan-card {
+        display: flex;
+        gap: 15px;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        align-items: center;
+    }
+    .pesanan-card img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .info {
+        flex: 1;
+    }
+    .info p {
+        margin: 6px 0;
+        color: #333;
+    }
+    .jumlah-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 5px 0;
+    }
+    .btn-ubah {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background-color: #e0e0e0;
+        color: #333;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-ubah:hover {
+        background-color: #bdbdbd;
+    }
+    .jumlah-display {
+        min-width: 24px;
+        text-align: center;
+        font-weight: bold;
+        color: #222;
+    }
+    .total-section {
+        text-align: right;
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+    .checkout-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .checkout-btn:hover {
+        background: #388e3c;
+    }
+    .back-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: #f44336;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .back-btn:hover {
+        background: #d32f2f;
+    }
+    </style>
+</head>
+<body>
+
+<div class="keranjang-container">
+    <h2>Keranjang Anda</h2>
+
+    <?php if (count($pesanan) > 0): ?>
+        <?php foreach ($pesanan as $item): ?>
+            <div class="pesanan-card" data-id="<?= $item['id'] ?>">
+                <img src="<?= htmlspecialchars($item['gambar']) ?>" alt="<?= htmlspecialchars($item['nama']) ?>">
+                <div class="info">
+                    <p><strong><?= htmlspecialchars($item['nama']) ?></strong></p>
+                    <?php if ($item['level'] && $item['level'] !== '-') : ?>
+                        <p>Level: <?= htmlspecialchars($item['level']) ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($item['catatan'])) : ?>
+                        <p>Catatan: <?= htmlspecialchars($item['catatan']) ?></p>
+                    <?php endif; ?>
+                    <p>Harga: Rp <?= number_format($item['harga'], 0, ',', '.') ?></p>
+                    <div class="jumlah-control">
+                        <button class="btn-ubah" onclick="ubahJumlah(<?= $item['id'] ?>, -1)">−</button>
+                        <span class="jumlah-display" id="jumlah-<?= $item['id'] ?>"><?= $item['jumlah'] ?></span>
+                        <button class="btn-ubah" onclick="ubahJumlah(<?= $item['id'] ?>, 1)">+</button>
+                    </div>
+                    <p id="total-<?= $item['id'] ?>" class="total-item" data-id="<?= $item['id'] ?>" data-total="<?= $item['total'] ?>">
+                        Total: Rp <?= number_format($item['total'], 0, ',', '.') ?>
+                    </p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+        <div class="total-section" id="total-semua">
+            Total Seluruh: Rp <?= number_format($totalHargaSemua, 0, ',', '.') ?>
+        </div>
+
+        <form action="pesanan.php" method="POST">
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </form>
+
+        <form action="menu.php" method="POST">
+            <button type="submit" class="back-btn">Kembali ke menu</button>
+        </form>
+    <?php else: ?>
+        <p>Keranjang Anda kosong.</p>
+    <?php endif; ?>
+</div>
+
+<script>
+function formatRupiah(angka) {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka);
+}
+
+function updateTotalSemuaLangsung() {
+    let total = 0;
+    document.querySelectorAll('.total-item').forEach(item => {
+        const nilai = parseInt(item.dataset.total);
+        if (!isNaN(nilai)) total += nilai;
+    });
+    document.getElementById('total-semua').textContent = 'Total Seluruh: ' + formatRupiah(total);
+}
+
+function ubahJumlah(id, perubahan) {
+    const aksi = perubahan === 1 ? 'tambah' : 'kurang';
+
+    fetch('ubah_jumlah.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: id=${id}&aksi=${aksi}
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.hapus) {
+                const elemen = document.querySelector(`[data-id="${id}"]`);
+                if (elemen) elemen.remove();
+            } else {
+                document.getElementById('jumlah-' + id).textContent = data.jumlah;
+                const totalEl = document.getElementById('total-' + id);
+                totalEl.textContent = 'Total: ' + formatRupiah(data.total);
+                totalEl.dataset.total = data.total;
+            }
+            updateTotalSemuaLangsung();
+        } else {
+            alert("Gagal memperbarui jumlah");
+        }
+    });
+}
+</script>
+
+<script>
+function checkout() {
+    const pesanan = [];
+
+    document.querySelectorAll('.pesanan-card').forEach(card => {
+        const id = card.getAttribute('data-id');
+        const namaProduk = card.querySelector('strong').textContent;
+        const jumlah = parseInt(card.querySelector('.jumlah-display').textContent);
+        const totalText = card.querySelector('.total-item').dataset.total;
+        const subtotal = parseInt(totalText);
+        const noMeja = 'Meja ' + (Math.floor(Math.random() * 10) + 1);
+        const tanggal = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+        pesanan.push({
+            namaProduk,
+            jmlh: jumlah,
+            subtotal,
+            noMeja,
+            tanggal
+        });
+    });
+
+    if (pesanan.length === 0) {
+        alert('Keranjang kosong!');
+        return;
+    }
+
+    fetch('checkout.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pesanan)
+    })
+    .then(res => res.json())
+    .then(response => {
+        if (response.status === 'success') {
+            alert('Checkout berhasil!');
+            window.location.href = 'pesanan.php';
+        } else {
+            alert('Gagal checkout: ' + response.message);
+        }
+    })
+    .catch(err => {
+        alert('Terjadi kesalahan!');
+        console.error(err);
+    });
+}
+</script>
+
+</body>
+</html>
+ <?php
 $conn = new mysqli('localhost', 'root', '', 'saung_bahagia');
 if ($conn->connect_error) die("Koneksi gagal: " . $conn->connect_error);
 
 session_start();
 $user_id = $_SESSION['user_id'] ?? 1;
+$nomor_meja = $_POST['nomor_meja'] ?? null;
 
-// Jika ingin tetap menyimpan data keranjang setelah checkout, tidak perlu hapus keranjang, cukup beri status atau update transaksi.
-$query = "UPDATE keranjang SET status = 'checkout', tgl_checkout = NOW() WHERE user_id = $user_id";
-$conn->query($query);
+if (!$nomor_meja) {
+    die("Nomor meja tidak ditemukan!");
+}
 
-// Redirect ke halaman menu setelah checkout
+// Ambil semua item keranjang user yang belum checkout
+$query = "SELECT * FROM keranjang WHERE user_id = $user_id AND status IS NULL";
+$result = $conn->query($query);
+
+// Salin ke tabel laporan
+while ($row = $result->fetch_assoc()) {
+    $nama = $conn->real_escape_string($row['nama']);
+    $harga = $row['harga'];
+    $jumlah = $row['jumlah'];
+    $total = $row['total_harga'];
+    $gambar = $conn->real_escape_string($row['gambar']);
+    $level = $conn->real_escape_string($row['level']);
+    $catatan = $conn->real_escape_string($row['catatan']);
+
+    $insert = "INSERT INTO laporan (user_id, nama, harga, jumlah, subtotal, gambar, level, catatan, nomor_meja, tanggal)
+               VALUES ($user_id, '$nama', $harga, $jumlah, $total, '$gambar', '$level', '$catatan', '$nomor_meja', NOW())";
+    $conn->query($insert);
+}
+
+// Update status keranjang jadi 'checkout'
+$conn->query("UPDATE keranjang SET status = 'checkout', tgl_checkout = NOW() WHERE user_id = $user_id");
+
 header("Location: menu.php");
 exit;
 ?>

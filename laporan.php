@@ -15,7 +15,7 @@ $hasil = $koneksi->query("SELECT * FROM laporan ORDER BY tanggal DESC");
     .nav{
     width: 1276px;
     height: 60px;
-    background-color: rgb(118, 234, 217);
+    background-color: #f7943e;
     margin-left: 30px;
     margin-bottom: 5px;
     display: flex;
@@ -26,7 +26,7 @@ $hasil = $koneksi->query("SELECT * FROM laporan ORDER BY tanggal DESC");
 
 .nav a{
     align-items: center;
-    color: black;
+    color: white;
     margin-top: 8px;
     margin-right: 30px;
     font-size: 25px;
@@ -59,19 +59,28 @@ $hasil = $koneksi->query("SELECT * FROM laporan ORDER BY tanggal DESC");
 .hapus button:hover{
     background-color: #ff0d5e;
 }
+ .grafik {
+      position: absolute;
+      font-size: 18px;
+      right: 20px;
+      padding-top: 13px;
+    }
 </style>
 <body>
     <div class="container">
 
         <!-- navbar -->
       <div class="nav">
-        <div class="gambar"><img src="saung.png" /></div>
-        <div class="isinav">
-        <a href="index.php" style="font-size: 30px;">Stok</a>
-        <a href="bayar.php" style="font-size: 30px;">Bayar</a>
-        <a href="laporan.php" style="font-size: 30px;">Laporan</a>
-        </div>
-      </div>
+    <div class="gambar"><img src="saung-removebg-preview.png" /></div>
+    <div class="isinav">
+      <a href="index.php">Stok</a>
+      <a href="bayar.php">Bayar</a>
+      <a href="laporan.php">Laporan</a>
+    </div>
+    <div class="grafik">
+      <a href="laporan-diagram.php"> Grafik Penjualan</a> 
+    </div>
+  </div>
 
         <div class="card-header">
             <center><h1 style="font-size: 30px; margin-top: 27px;" >LAPORAN PENJUALAN</h1></center>

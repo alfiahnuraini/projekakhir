@@ -1,3 +1,5 @@
+
+
 <?php
 include 'koneksi.php';
 
@@ -20,6 +22,13 @@ while ($row = $result->fetch_assoc()) {
 <!DOCTYPE html>
 <html>
 <head>
+  <h1 style="text-align: center;">Kelompok 4</h1>
+  <h2 style="text-align: center;">Nama Anggota Kelompok
+    1. Alfiah Nur Aini (4)
+    2. Apsha Arfianah (9)
+    3. Najwa Karima (28)
+    4. Nurhayati (30)
+  </h2>
     <title>Grafik Penjualan Harian</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>

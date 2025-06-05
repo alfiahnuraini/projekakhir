@@ -18,7 +18,7 @@ if (!isset($_SESSION['admin'])) {
     .nav{
     width: 1276px;
     height: 60px;
-    background-color: rgb(118, 234, 217);
+    background-color: #f7943e;
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
@@ -31,7 +31,7 @@ if (!isset($_SESSION['admin'])) {
 
 .nav a{
     align-items: center;
-    color: black;
+    color: white;
     margin-top: 8px;
     margin-right: 30px;
     font-size: 25px;
@@ -62,7 +62,7 @@ if (!isset($_SESSION['admin'])) {
     <!-- navbar -->
 
     <div class="nav">
-      <div class="gambar"><img src="saung.png" /></div>
+      <div class="gambar"><img src="saung-removebg-preview.png" /></div>
       <div class="isinav">
       <a href="index.php" style="font-size: 30px;">Stok</a>
       <a href="bayar.php" style="font-size: 30px;">Bayar</a>

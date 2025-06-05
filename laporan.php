@@ -1,3 +1,8 @@
+<?php
+include 'koneksi.php';
+$hasil = $koneksi->query("SELECT * FROM laporan ORDER BY tanggal DESC");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +15,7 @@
     .nav{
     width: 1276px;
     height: 60px;
-    background-color: rgb(118, 234, 217);
+    background-color: #f7943e;
     margin-left: 30px;
     margin-bottom: 5px;
     display: flex;
@@ -21,7 +26,7 @@
 
 .nav a{
     align-items: center;
-    color: black;
+    color: white;
     margin-top: 8px;
     margin-right: 30px;
     font-size: 25px;
@@ -54,19 +59,28 @@
 .hapus button:hover{
     background-color: #ff0d5e;
 }
+ .grafik {
+      position: absolute;
+      font-size: 18px;
+      right: 20px;
+      padding-top: 13px;
+    }
 </style>
 <body>
     <div class="container">
 
         <!-- navbar -->
       <div class="nav">
-        <div class="gambar"><img src="saung.png" /></div>
-        <div class="isinav">
-        <a href="index.php" style="font-size: 30px;">Stok</a>
-        <a href="bayar.php" style="font-size: 30px;">Bayar</a>
-        <a href="laporan.php" style="font-size: 30px;">Laporan</a>
-        </div>
-      </div>
+    <div class="gambar"><img src="saung-removebg-preview.png" /></div>
+    <div class="isinav">
+      <a href="index.php">Stok</a>
+      <a href="bayar.php">Bayar</a>
+      <a href="laporan.php">Laporan</a>
+    </div>
+    <div class="grafik">
+      <a href="laporan-diagram.php"> Grafik Penjualan</a> 
+    </div>
+  </div>
 
         <div class="card-header">
             <center><h1 style="font-size: 30px; margin-top: 27px;" >LAPORAN PENJUALAN</h1></center>
@@ -83,40 +97,37 @@
                 <th>Subtotal</th>
                 <th>Tanggal</th>
             </thead>
-            <tbody id="dataBaru"></tbody>
+            <!-- HTML bagian tabel -->
+<tbody>
+<?php 
+$no = 1;
+while ($row = $hasil->fetch_assoc()): 
+?>
+<tr>
+    <td><?= $no++ ?></td>
+    <td><?= htmlspecialchars($row['no_meja']) ?></td>
+    <td><?= htmlspecialchars($row['nama_produk']) ?></td>
+    <td><?= $row['jumlah'] ?></td>
+    <td><?= number_format($row['subtotal'], 0, ',', '.') ?></td>
+    <td><?= $row['tanggal'] ?></td>
+</tr>
+<?php endwhile;?>
+</tbody>
               </table>
           </div>
            <div class="hapus">
-        <button id="tombolHapus" class="btn-btn-danger" on click="hapusLaporan()">Hapus</button>
+        <button onclick="hapusLaporan()">Hapus</button>
+        <script>
+            function hapusLaporan() {
+                if(confirm("Yakin ingin menghapus semua laporan?")) {
+                    window.location.href = "hapus-laporan.php";
+                }
+            }
+            </script>
         </div>
         </div>
         </div>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const laporanList = JSON.parse(localStorage.getItem('LaporanList')) || [];
-    const tabel = document.getElementById("dataBaru");
-
-    laporanList.forEach((item, index) => {
-        const row  = tabel.insertRow();
-        row.innerHTML = `
-            <td>${(index + 1)}</td>
-            <td>${item.noMeja}</td>
-            <td>${item.namaProduk}</td>
-            <td>${item.jmlh}</td>
-            <td>${parseInt(item.subtotal).toLocaleString("id-ID")}</td>
-            <td>${item.tanggal}</td>
-        `;
-    });
-});
-
-document.getElementById("tombolHapus").addEventListener("click", function () {
-    if (confirm("Yakin ingin menghapus semua laporan?")) {
-        localStorage.removeItem('LaporanList');
-        location.reload();
-    }
-});
-</script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
